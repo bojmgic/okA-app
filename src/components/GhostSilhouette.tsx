@@ -21,6 +21,7 @@ interface VehicleGhostProps {
  * asset if the flat-opacity look reads too literal in practice.
  */
 export function VehicleGhost({ src, top, left, width, rotate, opacity }: VehicleGhostProps) {
+    if (!src) return null
   return (
     <Image
       source={src}
