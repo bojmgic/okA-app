@@ -6,7 +6,7 @@ import { VehicleGhost } from '../../components/GhostSilhouette'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
 
-const okaLogo = require('../../assets/brand/oka-logo-v2.webp')
+const okaLogo = undefined
 
 interface RatingScreenProps {
   subjectName: string
