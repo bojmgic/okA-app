@@ -6,9 +6,9 @@
  * the web app-preview describe the same product.
  */
 
-const okaMotorbikeTransparent = require('../assets/vehicles/okA-app-png-temp/oka-motorbike-transparent.png')
-const okaTricycleTransparent = require('../assets/vehicles/okA-app-png-temp/oka-tricycle-transparent.png')
-const okaAboboyaaCargoTransparent = require('../assets/vehicles/okA-app-png-temp/oka-aboboyaa-cargo.png')
+const okaMotorbikeTransparent: number | undefined = undefined
+const okaTricycleTransparent: number | undefined = undefined
+const okaAboboyaaCargoTransparent: number | undefined = undefined
 
 export interface VehicleOption {
   id: string
