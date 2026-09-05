@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { Text } from 'react-native'
 
 /**
@@ -15,9 +15,13 @@ export function brand(text: string): ReactNode {
   const nodes: ReactNode[] = [segments[0]]
   for (let i = 1; i < segments.length; i++) {
     nodes.push(
-      <Fragment key={i}>
+      // textTransform: 'none' pins the wordmark to its true "okA" casing even
+      // when a parent Text has textTransform: 'uppercase' (section labels,
+      // eyebrows, etc.) — otherwise it renders as "OKA" and the o/kA contrast
+      // the whole helper exists for disappears.
+      <Text key={i} style={{ textTransform: 'none' }}>
         o<Text style={{ fontStyle: 'italic' }}>kA</Text>
-      </Fragment>,
+      </Text>,
     )
     nodes.push(segments[i])
   }
