@@ -59,11 +59,15 @@ export default function HomeScreen({ mode, setMode, onRequestRide, onOpenWallet,
               <Pressable key={m} onPress={() => setMode(m)} style={({ pressed }) => [{ flex: 1 }, pressed && styles.modeTogglePressed]}>
                 {mode === m ? (
                   <LinearGradient colors={['#6E9AD2', '#4a80c8']} style={styles.modePillActive}>
-                    <Text style={styles.modeTextActive}>{m === 'ride' ? 'Ride' : 'Send'}</Text>
+                    <Text style={styles.modeTextActive} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
+                      {m === 'ride' ? 'Ride' : 'Send/Receive'}
+                    </Text>
                   </LinearGradient>
                 ) : (
                   <View style={styles.modePill}>
-                    <Text style={styles.modeText}>{m === 'ride' ? 'Ride' : 'Send'}</Text>
+                    <Text style={styles.modeText} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
+                      {m === 'ride' ? 'Ride' : 'Send/Receive'}
+                    </Text>
                   </View>
                 )}
               </Pressable>
