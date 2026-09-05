@@ -65,9 +65,9 @@ export default function AboutScreen({ onBack, onOpenCareers, onOpenNewsroom }: A
 
         <Text style={styles.sectionLabel}>Our story — 2025</Text>
         <Text style={styles.sectionTitle}>From a basketball court to a movement.</Text>
-        <Text style={styles.paragraph}>{brand("\n          The story of okA didn&rsquo;t start in a corporate boardroom. It began on a basketball court after a match\n          between friends. A simple question was thrown into the air: What can we build to serve society if we have\n          zero capital, relying only on dream and skill?\n        ")}</Text>
-        <Text style={styles.paragraph}>{brand("\n          Looking closely at the Ghanaian streets, the founders saw two major problems: the heavy stigma surrounding\n          &ldquo;Okada&rdquo; riders whose professional dignity was routinely overlooked, and a logistics system where\n          customers had to rely on luck and &ldquo;faith&rdquo; just to get packages delivered safely. okA was born to\n          change that.\n        ")}</Text>
-        <Text style={styles.paragraph}>{brand("\n          Refining the street language from &ldquo;Okada&rdquo; to &ldquo;Okadah&rdquo; and finally to okA, the\n          movement evolved into a high-standard logistics platform built on community and modern technology. Growing\n          organically through simple WhatsApp and phone calls, okA brought over 150 riders into the fold and\n          completed hundreds of deliveries on pure trust and grit.\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          The story of okA didn’t start in a corporate boardroom. It began on a basketball court after a match\n          between friends. A simple question was thrown into the air: What can we build to serve society if we have\n          zero capital, relying only on dream and skill?\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          Looking closely at the Ghanaian streets, the founders saw two major problems: the heavy stigma surrounding\n          “Okada” riders whose professional dignity was routinely overlooked, and a logistics system where\n          customers had to rely on luck and “faith” just to get packages delivered safely. okA was born to\n          change that.\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          Refining the street language from “Okada” to “Okadah” and finally to okA, the\n          movement evolved into a high-standard logistics platform built on community and modern technology. Growing\n          organically through simple WhatsApp and phone calls, okA brought over 150 riders into the fold and\n          completed hundreds of deliveries on pure trust and grit.\n        ")}</Text>
         <Text style={styles.paragraph}>{brand("\n          Today, okA combines that grassroots foundation with digital infrastructure: taking a label once used in\n          shame and turning it into a crown of service.\n        ")}</Text>
 
         <View style={styles.growthCard}>
@@ -77,11 +77,11 @@ export default function AboutScreen({ onBack, onOpenCareers, onOpenNewsroom }: A
 
         <Text style={styles.sectionLabel}>Founders</Text>
         <Text style={styles.sectionTitle}>People before capital.</Text>
-        <Text style={styles.paragraph}>{brand("\n          Founded by a group of Ghanaian friends, engineers, and visionaries, the team proved that people don&rsquo;t\n          follow money; they follow heart. Driven by human potential, the founders built okA to elevate rider\n          dignity, provide enterprise-grade reliability for local commerce, and show that &ldquo;nothing&rdquo;\n          becomes &ldquo;something&rdquo; when a community moves together.\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          Founded by a group of Ghanaian friends, engineers, and visionaries, the team proved that people don’t\n          follow money; they follow heart. Driven by human potential, the founders built okA to elevate rider\n          dignity, provide enterprise-grade reliability for local commerce, and show that “nothing”\n          becomes “something” when a community moves together.\n        ")}</Text>
         <View style={styles.quoteBlock}>
           <Text style={styles.quoteText}>
-            &ldquo;Great movements don&rsquo;t begin when everything is available. They begin when people agree on a
-            purpose, take the first step, and continue one step at a time.&rdquo;
+            “Great movements don’t begin when everything is available. They begin when people agree on a
+            purpose, take the first step, and continue one step at a time.”
           </Text>
         </View>
 
@@ -143,7 +143,7 @@ export default function AboutScreen({ onBack, onOpenCareers, onOpenNewsroom }: A
         <View style={styles.ctaCard}>
           <Text style={styles.ctaTitle}>Move with us.</Text>
           <Text style={styles.ctaBody}>
-            Ride, send, or build alongside a network that&rsquo;s scaling Ghana&rsquo;s mobility from the ground up.
+            Ride, send, or build alongside a network that’s scaling Ghana’s mobility from the ground up.
           </Text>
           <View style={{ flexDirection: 'row', gap: 10, marginTop: 14 }}>
             <PrimaryButton label="See open roles" onPress={onOpenCareers} style={{ flex: 1 }} />

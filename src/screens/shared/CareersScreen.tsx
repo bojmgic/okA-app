@@ -31,7 +31,7 @@ export default function CareersScreen({ onBack }: CareersScreenProps) {
       <ScrollView contentContainerStyle={styles.list}>
         <Text style={styles.heroEyebrow}>Build the future of mobility.</Text>
         <Text style={styles.heroBody}>
-          A grassroots company built by people who understood the streets first — and we&rsquo;re just getting
+          A grassroots company built by people who understood the streets first — and we’re just getting
           started.
         </Text>
 
@@ -46,7 +46,7 @@ export default function CareersScreen({ onBack }: CareersScreenProps) {
         <Text style={styles.sectionTitle}>Real impact, from the ground up.</Text>
         <Text style={styles.paragraph}>
           Be part of a movement that transforms lives, restores professional dignity to local workers, and builds
-          digital infrastructure from the ground up. We&rsquo;re looking for passionate people who want to make real
+          digital infrastructure from the ground up. We’re looking for passionate people who want to make real
           impact.
         </Text>
 
@@ -66,12 +66,12 @@ export default function CareersScreen({ onBack }: CareersScreenProps) {
         <Text style={styles.sectionLabel}>Open roles</Text>
         <Text style={styles.sectionTitle}>We grow deliberately.</Text>
         <Text style={styles.paragraph}>
-          We&rsquo;re a small, fast-moving team and we grow it deliberately. Reach out below and we&rsquo;ll let you
-          know what&rsquo;s currently open — including volunteer and internship opportunities.
+          We’re a small, fast-moving team and we grow it deliberately. Reach out below and we’ll let you
+          know what’s currently open — including volunteer and internship opportunities.
         </Text>
 
         <View style={styles.ctaCard}>
-          <Text style={styles.ctaTitle}>Let&rsquo;s talk.</Text>
+          <Text style={styles.ctaTitle}>Let’s talk.</Text>
           <Text style={styles.ctaBody}>
             Interested in any of our departments? Send a letter of interest and your CV to admin@okaghana.com.
           </Text>
