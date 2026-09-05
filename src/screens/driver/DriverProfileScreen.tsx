@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ArrowLeft, Car, Landmark, History, LifeBuoy, Settings, LogOut } from 'lucide-react-native'
+import { ArrowLeft, Car, Landmark, History, LifeBuoy, Settings, LogOut, Info } from 'lucide-react-native'
 import { mockRider, okaPoints, redeemOptions, riderMission } from '../../data/appPreview'
 import { CediGhost } from '../../components/GhostSilhouette'
 import IconButton from '../../components/IconButton'
@@ -18,6 +18,7 @@ interface DriverProfileScreenProps {
   onOpenVehicleDocs: () => void
   onOpenPayout: () => void
   onOpenRideHistory: () => void
+  onOpenAbout: () => void
   onLogout: () => void
 }
 
@@ -29,6 +30,7 @@ export default function DriverProfileScreen({
   onOpenVehicleDocs,
   onOpenPayout,
   onOpenRideHistory,
+  onOpenAbout,
   onLogout,
 }: DriverProfileScreenProps) {
   const menuItems = [
@@ -36,6 +38,7 @@ export default function DriverProfileScreen({
     { icon: Landmark, label: 'Bank & payouts', onPress: onOpenPayout },
     { icon: History, label: 'Ride history', onPress: onOpenRideHistory },
     { icon: LifeBuoy, label: 'Help & Support', onPress: onOpenHelp },
+    { icon: Info, label: 'About okA', onPress: onOpenAbout },
     { icon: Settings, label: 'Settings', onPress: onOpenSettings },
   ]
   const initials = mockRider.name.split(' ').map((n) => n[0]).join('')

@@ -5,17 +5,17 @@
  */
 export const colors = {
   primary: {
-    DEFAULT: '#0057E7',
-    50: '#EBF1FF',
-    100: '#D6E4FF',
-    200: '#ADC8FF',
-    300: '#7FA6FF',
-    400: '#4B7EFF',
-    500: '#1450E0',
-    600: '#0057E7',
-    700: '#0044B8',
-    800: '#00318A',
-    900: '#00205C',
+    DEFAULT: '#4a80c8',
+    50: '#EEF3FA',
+    100: '#DCE7F4',
+    200: '#B9CFE9',
+    300: '#96B7DE',
+    400: '#6E9AD2',
+    500: '#4a80c8',
+    600: '#3A6BB0',
+    700: '#2F5590',
+    800: '#264670',
+    900: '#1D3554',
   },
   ink: {
     DEFAULT: '#0B0B0F',
@@ -35,15 +35,16 @@ export const colors = {
 } as const
 
 /** Same 180deg blue button gradient used everywhere on the web app-preview
- *  (`linear-gradient(180deg,#1D6BFF 0%,#0057E7 60%)`) — kept as an explicit
+ *  (`linear-gradient(180deg,#6E9AD2 0%,#4a80c8 60%)`) — kept as an explicit
  *  two-stop tuple since RN's LinearGradient takes colors/locations arrays
- *  rather than a CSS gradient string. */
+ *  rather than a CSS gradient string. Re-derived from the primary.400→500
+ *  ramp above after the brand blue moved from #0057E7 to #4a80c8. */
 export const primaryButtonGradient = {
-  colors: ['#1D6BFF', '#0057E7'] as const,
+  colors: ['#6E9AD2', '#4a80c8'] as const,
   locations: [0, 0.6] as const,
 }
 
 export const darkButtonGradient = {
-  colors: ['#0A2E73', '#00205C'] as const,
+  colors: ['#264670', '#1D3554'] as const,
   locations: [0, 0.6] as const,
 }

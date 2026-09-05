@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { X, Phone, MessageCircle, ShieldAlert, User } from 'lucide-react-native'
+import { X, Phone, MessageCircle, ShieldAlert, User, KeyRound } from 'lucide-react-native'
 import MockMap from '../../components/MockMap'
 import IconButton from '../../components/IconButton'
 import StampMark from '../../components/StampMark'
@@ -17,6 +17,11 @@ interface LiveTripScreenProps {
 }
 
 /** Ported from LiveTripScreen.tsx on the web app-preview — trip tracking as a ticket stub. */
+// Mock recipient verification PIN — ported from the website's 4-Digit Parcel
+// Verification safety pillar (Safety.tsx / Send.tsx). In production this
+// would be generated per-delivery and shown only to the recipient.
+const PARCEL_PIN = '4821'
+
 export default function LiveTripScreen({ mode, vehicleId, onEnd }: LiveTripScreenProps) {
   const stepIndex = 1 // "Picked up" — a representative mid-trip snapshot for the preview
   const vehicle = vehicleOptions.find((v) => v.id === vehicleId) ?? vehicleOptions[0]
@@ -56,7 +61,7 @@ export default function LiveTripScreen({ mode, vehicleId, onEnd }: LiveTripScree
       </SafeAreaView>
 
       <View style={styles.bottomWrap}>
-        <WaveCap fill="#00205C" />
+        <WaveCap fill="#1D3554" />
         <SafeAreaView edges={['bottom']} style={styles.sheet}>
           <View style={styles.ticket}>
             <View style={styles.ticketHeader}>
@@ -74,7 +79,24 @@ export default function LiveTripScreen({ mode, vehicleId, onEnd }: LiveTripScree
               <StampMark label={mode === 'ride' ? 'On the way' : sendStatusSteps[stepIndex]} style={{ width: 104 }} />
             </View>
 
-            <TicketDivider holeColor="#00205C" style={{ marginVertical: 16 }} />
+            <TicketDivider holeColor="#1D3554" style={{ marginVertical: 16 }} />
+
+            {mode === 'send' && (
+              <View style={styles.pinBlock}>
+                <View style={styles.pinHeader}>
+                  <KeyRound size={13} color={colors.primary.DEFAULT} />
+                  <Text style={styles.pinLabel}>Recipient verification PIN</Text>
+                </View>
+                <View style={styles.pinRow}>
+                  {PARCEL_PIN.split('').map((digit, i) => (
+                    <View key={i} style={styles.pinDigit}>
+                      <Text style={styles.pinDigitText}>{digit}</Text>
+                    </View>
+                  ))}
+                </View>
+                <Text style={styles.pinHint}>Share this code with your recipient — your rider confirms it at drop-off.</Text>
+              </View>
+            )}
 
             <View style={styles.actionsRow}>
               <CouponButton icon={Phone} label="Call" />
@@ -111,4 +133,11 @@ const styles = StyleSheet.create({
   riderName: { fontFamily: fonts.sansSemibold, fontSize: 14, color: colors.ink.DEFAULT },
   riderMeta: { fontSize: 12, color: colors.ink.light },
   actionsRow: { flexDirection: 'row', gap: 12 },
+  pinBlock: { marginBottom: 16, borderRadius: 14, backgroundColor: colors.surface.tint, padding: 14 },
+  pinHeader: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  pinLabel: { fontFamily: fonts.sansSemibold, fontSize: 11, color: colors.primary.DEFAULT, textTransform: 'uppercase', letterSpacing: 0.5 },
+  pinRow: { marginTop: 10, flexDirection: 'row', gap: 8 },
+  pinDigit: { height: 40, width: 32, borderRadius: 10, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
+  pinDigitText: { fontFamily: fonts.display, fontSize: 17, color: colors.ink.DEFAULT },
+  pinHint: { marginTop: 10, fontSize: 11, lineHeight: 15, color: colors.ink.light },
 })

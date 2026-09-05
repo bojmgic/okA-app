@@ -49,7 +49,7 @@ export default function DriverTripScreen({ onComplete }: DriverTripScreenProps) 
       </SafeAreaView>
 
       <View style={styles.bottomWrap}>
-        <WaveCap fill="#00205C" />
+        <WaveCap fill="#1D3554" />
         <SafeAreaView edges={['bottom']} style={styles.sheet}>
           <View style={styles.ticket}>
             <View style={styles.customerRow}>
@@ -66,7 +66,7 @@ export default function DriverTripScreen({ onComplete }: DriverTripScreenProps) 
               </View>
             </View>
 
-            <TicketDivider holeColor="#00205C" style={{ marginVertical: 16 }} />
+            <TicketDivider holeColor="#1D3554" style={{ marginVertical: 16 }} />
 
             <View style={styles.actionsRow}>
               <CouponButton icon={Phone} label="Call" layout="row" style={{ flex: 1 }} />

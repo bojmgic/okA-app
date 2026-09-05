@@ -1,12 +1,13 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Search, MapPin, Home, Clock, Wallet, User, Briefcase, Star, Bell } from 'lucide-react-native'
+import { Search, MapPin, Home, Clock, Wallet, User, Bell } from 'lucide-react-native'
 import MockMap from '../../components/MockMap'
 import IconButton from '../../components/IconButton'
 import TabBar from '../../components/TabBar'
 import { VehicleGhost } from '../../components/GhostSilhouette'
 import WaveCap from '../../components/WaveCap'
+import type { SavedPlace } from '../../data/savedPlaces'
 import { colors, fonts } from '../../theme'
 
 interface HomeScreenProps {
@@ -17,16 +18,13 @@ interface HomeScreenProps {
   onOpenProfile: () => void
   onOpenActivity: () => void
   onOpenNotifications: () => void
+  savedPlaces: SavedPlace[]
 }
 
-const savedPlaces = [
-  { icon: Home, label: 'Home', detail: 'East Legon' },
-  { icon: Briefcase, label: 'Work', detail: 'Airport City' },
-  { icon: Star, label: 'Accra Mall', detail: 'Frequent stop' },
-]
-
-/** Ported from HomeScreen.tsx on the web app-preview — customer landing screen. */
-export default function HomeScreen({ mode, setMode, onRequestRide, onOpenWallet, onOpenProfile, onOpenActivity, onOpenNotifications }: HomeScreenProps) {
+/** Ported from HomeScreen.tsx on the web app-preview — customer landing screen.
+ *  Quick-pick list below the search bar is the same `savedPlaces` state
+ *  RootApp shares with SavedPlacesScreen, not a separate hardcoded list. */
+export default function HomeScreen({ mode, setMode, onRequestRide, onOpenWallet, onOpenProfile, onOpenActivity, onOpenNotifications, savedPlaces }: HomeScreenProps) {
   const insets = useSafeAreaInsets()
   return (
     <View style={styles.screen}>
@@ -60,7 +58,7 @@ export default function HomeScreen({ mode, setMode, onRequestRide, onOpenWallet,
             {(['ride', 'send'] as const).map((m) => (
               <Pressable key={m} onPress={() => setMode(m)} style={({ pressed }) => [{ flex: 1 }, pressed && styles.modeTogglePressed]}>
                 {mode === m ? (
-                  <LinearGradient colors={['#1D6BFF', '#0057E7']} style={styles.modePillActive}>
+                  <LinearGradient colors={['#6E9AD2', '#4a80c8']} style={styles.modePillActive}>
                     <Text style={styles.modeTextActive}>{m === 'ride' ? 'Ride' : 'Send'}</Text>
                   </LinearGradient>
                 ) : (
@@ -85,7 +83,7 @@ export default function HomeScreen({ mode, setMode, onRequestRide, onOpenWallet,
         <View style={styles.placesCard}>
           {savedPlaces.map((place, i) => (
             <Pressable
-              key={place.label}
+              key={place.id}
               onPress={onRequestRide}
               style={({ pressed }) => [styles.placeRow, i > 0 && styles.placeRowBorder, pressed && styles.placeRowPressed]}
             >

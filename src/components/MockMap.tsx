@@ -334,7 +334,7 @@ export default function MockMap({
           <LinearGradient id="map-light-wash" x1="0%" y1="0%" x2="70%" y2="100%">
             <Stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.32} />
             <Stop offset="45%" stopColor="#FFFFFF" stopOpacity={0.06} />
-            <Stop offset="100%" stopColor="#00205C" stopOpacity={0.05} />
+            <Stop offset="100%" stopColor="#1D3554" stopOpacity={0.05} />
           </LinearGradient>
           {/* Top-to-bottom sheen applied to every building block for a touch
               of glassy dimension instead of a flat fill. */}
@@ -346,36 +346,36 @@ export default function MockMap({
               reads as a sketched illustration rather than flat map-SDK
               tiles. */}
           <Pattern id="map-hatch" width={6} height={6} patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <Line x1={0} y1={0} x2={0} y2={6} stroke="#0057E7" strokeOpacity={0.18} strokeWidth={1.4} />
+            <Line x1={0} y1={0} x2={0} y2={6} stroke="#4a80c8" strokeOpacity={0.18} strokeWidth={1.4} />
           </Pattern>
         </Defs>
         <Rect width={400} height={700} fill="#E7EEFC" />
 
         {/* Park — illustrated tree canopy dabs instead of a flat green blob. */}
-        <Path d="M-20,80 C40,50 90,90 60,150 C30,210 -30,190 -20,80 Z" fill="#D7EEDD" stroke="#0057E7" strokeOpacity={0.15} strokeWidth={1.5} />
+        <Path d="M-20,80 C40,50 90,90 60,150 C30,210 -30,190 -20,80 Z" fill="#D7EEDD" stroke="#4a80c8" strokeOpacity={0.15} strokeWidth={1.5} />
         {[[10, 90], [30, 70], [45, 110], [15, 130], [55, 90]].map(([tx, ty], i) => (
-          <Circle key={`tree-${i}`} cx={tx} cy={ty} r={7} fill="#BFE3C9" stroke="#0057E7" strokeOpacity={0.12} strokeWidth={1} />
+          <Circle key={`tree-${i}`} cx={tx} cy={ty} r={7} fill="#BFE3C9" stroke="#4a80c8" strokeOpacity={0.12} strokeWidth={1} />
         ))}
 
         {/* Second, smaller green space — a traffic-circle park, so greenery
             reads as "distributed through the city" rather than one corner
             park being the whole story. */}
-        <Circle cx={140} cy={481} r={17} fill="#D7EEDD" stroke="#0057E7" strokeOpacity={0.15} strokeWidth={1.5} />
+        <Circle cx={140} cy={481} r={17} fill="#D7EEDD" stroke="#4a80c8" strokeOpacity={0.15} strokeWidth={1.5} />
         {[[135, 476], [147, 478], [138, 488], [148, 489]].map(([tx, ty], i) => (
-          <Circle key={`circle-tree-${i}`} cx={tx} cy={ty} r={4} fill="#BFE3C9" stroke="#0057E7" strokeOpacity={0.12} strokeWidth={1} />
+          <Circle key={`circle-tree-${i}`} cx={tx} cy={ty} r={4} fill="#BFE3C9" stroke="#4a80c8" strokeOpacity={0.12} strokeWidth={1} />
         ))}
 
         {/* Water — a couple of hand-drawn wave squiggles instead of a flat fill. */}
         <Path
           d="M330,420 C400,390 430,460 400,540 C370,620 300,600 300,520 C300,470 300,440 330,420 Z"
           fill="#CFE3F9"
-          stroke="#0057E7"
+          stroke="#4a80c8"
           strokeOpacity={0.15}
           strokeWidth={1.5}
         />
-        <Path d="M320,460 C340,455 350,465 370,460" fill="none" stroke="#0057E7" strokeOpacity={0.2} strokeWidth={1.5} strokeLinecap="round" />
-        <Path d="M320,500 C340,495 350,505 370,500" fill="none" stroke="#0057E7" strokeOpacity={0.2} strokeWidth={1.5} strokeLinecap="round" />
-        <Path d="M320,540 C340,535 350,545 365,540" fill="none" stroke="#0057E7" strokeOpacity={0.2} strokeWidth={1.5} strokeLinecap="round" />
+        <Path d="M320,460 C340,455 350,465 370,460" fill="none" stroke="#4a80c8" strokeOpacity={0.2} strokeWidth={1.5} strokeLinecap="round" />
+        <Path d="M320,500 C340,495 350,505 370,500" fill="none" stroke="#4a80c8" strokeOpacity={0.2} strokeWidth={1.5} strokeLinecap="round" />
+        <Path d="M320,540 C340,535 350,545 365,540" fill="none" stroke="#4a80c8" strokeOpacity={0.2} strokeWidth={1.5} strokeLinecap="round" />
 
         {/* City blocks — full 18-block set with per-block rotation, hatch
             texture on every third non-core block, a top-to-bottom sheen, and
@@ -383,8 +383,8 @@ export default function MockMap({
             rooftop unit dots. */}
         {BLOCKS.map(([x, y, w, h, r, core], i) => (
           <G key={i} transform={`rotate(${r} ${x + w / 2} ${y + h / 2})`}>
-            {core && <Rect x={x + 5} y={y + 8} width={w} height={h} rx={10} fill="#00205C" fillOpacity={0.07} />}
-            <Rect x={x + 3} y={y + 5} width={w} height={h} rx={10} fill="#00205C" fillOpacity={0.1} />
+            {core && <Rect x={x + 5} y={y + 8} width={w} height={h} rx={10} fill="#1D3554" fillOpacity={0.07} />}
+            <Rect x={x + 3} y={y + 5} width={w} height={h} rx={10} fill="#1D3554" fillOpacity={0.1} />
             <Rect
               x={x}
               y={y}
@@ -392,20 +392,20 @@ export default function MockMap({
               height={h}
               rx={10}
               fill={core ? '#C3D3F4' : i % 3 === 0 ? 'url(#map-hatch)' : '#D7E2F7'}
-              stroke="#0057E7"
+              stroke="#4a80c8"
               strokeOpacity={core ? 0.22 : 0.14}
               strokeWidth={1.5}
             />
             <Rect x={x} y={y} width={w} height={h} rx={10} fill="url(#block-sheen)" opacity={core ? 0.55 : 0.35} />
             {core &&
               [0.3, 0.55, 0.75].map((f, di) => (
-                <Circle key={di} cx={x + w * f} cy={y + h * 0.25} r={2.2} fill="#0057E7" fillOpacity={0.18} />
+                <Circle key={di} cx={x + w * f} cy={y + h * 0.25} r={2.2} fill="#4a80c8" fillOpacity={0.18} />
               ))}
           </G>
         ))}
 
         {/* Roadside greenery — small tree dabs lining the two busiest roads. */}
-        <G fill="#BFE3C9" stroke="#0057E7" strokeOpacity={0.14} strokeWidth={1}>
+        <G fill="#BFE3C9" stroke="#4a80c8" strokeOpacity={0.14} strokeWidth={1}>
           {[40, 90, 300, 350].map((tx) => (
             <Circle key={`tree-y120-${tx}`} cx={tx} cy={108} r={4} />
           ))}
@@ -420,40 +420,40 @@ export default function MockMap({
         <G opacity={0.4}>
           {/* Market — three stall dots under a small awning arc */}
           <G transform="translate(55 300)">
-            <Circle r={10} fill="white" stroke="#0057E7" strokeWidth={1.5} />
-            <Path d="M-5,-2 A5,5 0 0 1 5,-2" fill="none" stroke="#0057E7" strokeWidth={1.5} strokeLinecap="round" />
-            <Circle cx={-4} cy={3} r={1.6} fill="#0057E7" />
-            <Circle cx={0} cy={3} r={1.6} fill="#0057E7" />
-            <Circle cx={4} cy={3} r={1.6} fill="#0057E7" />
+            <Circle r={10} fill="white" stroke="#4a80c8" strokeWidth={1.5} />
+            <Path d="M-5,-2 A5,5 0 0 1 5,-2" fill="none" stroke="#4a80c8" strokeWidth={1.5} strokeLinecap="round" />
+            <Circle cx={-4} cy={3} r={1.6} fill="#4a80c8" />
+            <Circle cx={0} cy={3} r={1.6} fill="#4a80c8" />
+            <Circle cx={4} cy={3} r={1.6} fill="#4a80c8" />
           </G>
           {/* Hospital — medical cross */}
           <G transform="translate(345 230)">
-            <Circle r={10} fill="white" stroke="#0057E7" strokeWidth={1.5} />
-            <Path d="M0,-5 L0,5 M-5,0 L5,0" stroke="#0057E7" strokeWidth={2} strokeLinecap="round" />
+            <Circle r={10} fill="white" stroke="#4a80c8" strokeWidth={1.5} />
+            <Path d="M0,-5 L0,5 M-5,0 L5,0" stroke="#4a80c8" strokeWidth={2} strokeLinecap="round" />
           </G>
           {/* School — simplified mortarboard */}
           <G transform="translate(55 555)">
-            <Circle r={10} fill="white" stroke="#0057E7" strokeWidth={1.5} />
-            <Path d="M-6,-1 L0,-4 L6,-1 L0,2 Z" fill="#0057E7" fillOpacity={0.85} />
-            <Line x1={6} y1={-1} x2={6} y2={3} stroke="#0057E7" strokeWidth={1.2} />
+            <Circle r={10} fill="white" stroke="#4a80c8" strokeWidth={1.5} />
+            <Path d="M-6,-1 L0,-4 L6,-1 L0,2 Z" fill="#4a80c8" fillOpacity={0.85} />
+            <Line x1={6} y1={-1} x2={6} y2={3} stroke="#4a80c8" strokeWidth={1.2} />
           </G>
           {/* Mall — shopping bag */}
           <G transform="translate(170 460)">
-            <Circle r={10} fill="white" stroke="#0057E7" strokeWidth={1.5} />
-            <Path d="M-4,-1 L-4,-3 A4,4 0 0 1 4,-3 L4,-1" fill="none" stroke="#0057E7" strokeWidth={1.3} />
-            <Rect x={-5} y={-1} width={10} height={7} rx={1.2} fill="#0057E7" fillOpacity={0.85} />
+            <Circle r={10} fill="white" stroke="#4a80c8" strokeWidth={1.5} />
+            <Path d="M-4,-1 L-4,-3 A4,4 0 0 1 4,-3 L4,-1" fill="none" stroke="#4a80c8" strokeWidth={1.3} />
+            <Rect x={-5} y={-1} width={10} height={7} rx={1.2} fill="#4a80c8" fillOpacity={0.85} />
           </G>
           {/* Filling station — fuel pump */}
           <G transform="translate(250 560)">
-            <Circle r={10} fill="white" stroke="#0057E7" strokeWidth={1.5} />
-            <Rect x={-4} y={-4} width={6} height={8} rx={1} fill="#0057E7" fillOpacity={0.85} />
-            <Path d="M2,-2 L5,-2 L5,3 A1.5,1.5 0 0 1 2,3" fill="none" stroke="#0057E7" strokeWidth={1.3} />
+            <Circle r={10} fill="white" stroke="#4a80c8" strokeWidth={1.5} />
+            <Rect x={-4} y={-4} width={6} height={8} rx={1} fill="#4a80c8" fillOpacity={0.85} />
+            <Path d="M2,-2 L5,-2 L5,3 A1.5,1.5 0 0 1 2,3" fill="none" stroke="#4a80c8" strokeWidth={1.3} />
           </G>
         </G>
 
         {/* Street name labels — same rotation transforms as web for the
             vertical ones. */}
-        <G fill="#00205C" fillOpacity={0.32} fontSize={8} fontWeight="600" letterSpacing={0.4}>
+        <G fill="#1D3554" fillOpacity={0.32} fontSize={8} fontWeight="600" letterSpacing={0.4}>
           <SvgText x={130} y={116}>INDEPENDENCE AVE</SvgText>
           <SvgText x={140} y={354}>LIBERATION AVE</SvgText>
           <SvgText x={110} y={477}>OXFORD ST</SvgText>
@@ -464,7 +464,7 @@ export default function MockMap({
         {/* Ambient background traffic — a few faint, slow-moving dots on side
             streets (not the hero route), independent of showRoute, so the
             map feels alive on every screen, not just active trips. */}
-        <G fill="#0057E7" fillOpacity={0.28}>
+        <G fill="#4a80c8" fillOpacity={0.28}>
           <AnimatedCircle r={3.2} animatedProps={dot1Props} />
           <AnimatedCircle r={3} animatedProps={dot2Props} />
           <AnimatedCircle r={2.8} animatedProps={dot3Props} />
@@ -476,7 +476,7 @@ export default function MockMap({
         {showNearbyVehicles &&
           NEARBY_VEHICLE_SPOTS.map((spot, i) => (
             <G key={i} transform={`translate(${spot.x} ${spot.y})`}>
-              <Pulse cx={0} cy={0} r={9} color="#0057E7" />
+              <Pulse cx={0} cy={0} r={9} color="#4a80c8" />
               <G transform={`rotate(${spot.rotate + 90})`} opacity={0.55}>
                 <SvgImage href={okaMotorbikeTopDown} x={-7} y={-12} width={14} height={24} />
               </G>
@@ -498,17 +498,17 @@ export default function MockMap({
 
         {/* Compass */}
         <G transform="translate(368 44)" opacity={0.4}>
-          <Circle r={13} fill="white" stroke="#0057E7" strokeWidth={1.3} />
-          <Path d="M0,-8 L3,0 L0,3 L-3,0 Z" fill="#0057E7" />
-          <SvgText x={0} y={-16} textAnchor="middle" fontSize={7} fontWeight="700" fill="#00205C">
+          <Circle r={13} fill="white" stroke="#4a80c8" strokeWidth={1.3} />
+          <Path d="M0,-8 L3,0 L0,3 L-3,0 Z" fill="#4a80c8" />
+          <SvgText x={0} y={-16} textAnchor="middle" fontSize={7} fontWeight="700" fill="#1D3554">
             N
           </SvgText>
         </G>
 
         {showYouAreHere && (
           <G>
-            <Pulse cx={180} cy={400} r={10} color="#0057E7" />
-            <Circle cx={180} cy={400} r={7} fill="#0057E7" stroke="white" strokeWidth={3} />
+            <Pulse cx={180} cy={400} r={10} color="#4a80c8" />
+            <Circle cx={180} cy={400} r={7} fill="#4a80c8" stroke="white" strokeWidth={3} />
           </G>
         )}
 
@@ -518,14 +518,14 @@ export default function MockMap({
                 else in amber, the "congestion ahead" convention. */}
             <Path d="M100,470 L100,300" fill="none" stroke="#F5A623" strokeWidth={7} strokeLinecap="round" strokeOpacity={0.55} />
 
-            <Path d={ROUTE_D} fill="none" stroke="#0057E7" strokeWidth={5} strokeLinecap="round" strokeOpacity={0.22} />
+            <Path d={ROUTE_D} fill="none" stroke="#4a80c8" strokeWidth={5} strokeLinecap="round" strokeOpacity={0.22} />
 
             {/* Glow stand-in — see useRouteDrawOn's comment for why this
                 replaces web's CSS drop-shadow filter. */}
             <AnimatedPath
               d={ROUTE_D}
               fill="none"
-              stroke="#0057E7"
+              stroke="#4a80c8"
               strokeWidth={11}
               strokeLinecap="round"
               animatedProps={glowProps}
@@ -536,19 +536,19 @@ export default function MockMap({
             <AnimatedPath
               d={ROUTE_D}
               fill="none"
-              stroke="#0057E7"
+              stroke="#4a80c8"
               strokeWidth={5}
               strokeLinecap="round"
               strokeDasharray={[ROUTE_TOTAL_LENGTH, ROUTE_TOTAL_LENGTH]}
               animatedProps={drawOnProps}
             />
-            <Circle cx={90} cy={620} r={8} fill="#0057E7" stroke="white" strokeWidth={3} />
-            <Circle cx={300} cy={70} r={8} fill="#0057E7" stroke="white" strokeWidth={3} />
+            <Circle cx={90} cy={620} r={8} fill="#4a80c8" stroke="white" strokeWidth={3} />
+            <Circle cx={300} cy={70} r={8} fill="#4a80c8" stroke="white" strokeWidth={3} />
 
             {animateVehicle && (
               <AnimatedG animatedProps={etaGroupProps}>
                 <Rect x={-19} y={-10} width={38} height={18} rx={9} fill="white" />
-                <SvgText x={0} y={3} textAnchor="middle" fontSize={9} fontWeight="700" fill="#0057E7">
+                <SvgText x={0} y={3} textAnchor="middle" fontSize={9} fontWeight="700" fill="#4a80c8">
                   {etaMin} min
                 </SvgText>
               </AnimatedG>

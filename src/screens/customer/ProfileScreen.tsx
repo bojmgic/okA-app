@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Home, Clock, Wallet, User, CreditCard, MapPinned, Bell, LifeBuoy, Settings, LogOut } from 'lucide-react-native'
+import { Home, Clock, Wallet, User, CreditCard, MapPinned, Bell, LifeBuoy, Settings, LogOut, Info } from 'lucide-react-native'
 import { mockCustomer, okaPoints, redeemOptions, customerMission } from '../../data/appPreview'
 import { CediGhost } from '../../components/GhostSilhouette'
 import StampMark from '../../components/StampMark'
@@ -20,6 +20,7 @@ interface ProfileScreenProps {
   onOpenHelp: () => void
   onOpenNotifications: () => void
   onOpenActivity: () => void
+  onOpenAbout: () => void
   onLogout: () => void
 }
 
@@ -32,6 +33,7 @@ export default function ProfileScreen({
   onOpenHelp,
   onOpenNotifications,
   onOpenActivity,
+  onOpenAbout,
   onLogout,
 }: ProfileScreenProps) {
   const menuItems = [
@@ -39,6 +41,7 @@ export default function ProfileScreen({
     { icon: MapPinned, label: 'Saved places', onPress: onOpenSavedPlaces },
     { icon: Bell, label: 'Notifications', onPress: onOpenNotifications },
     { icon: LifeBuoy, label: 'Help & Support', onPress: onOpenHelp },
+    { icon: Info, label: 'About okA', onPress: onOpenAbout },
     { icon: Settings, label: 'Settings', onPress: onOpenSettings },
   ]
   const initials = mockCustomer.name.split(' ').map((n) => n[0]).join('')

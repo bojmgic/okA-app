@@ -41,7 +41,7 @@ export default function VehicleSelectScreen({ mode, selected, onSelect, onBack, 
       </SafeAreaView>
 
       <View style={styles.bottomWrap}>
-        <WaveCap fill="#00205C" />
+        <WaveCap fill="#1D3554" />
         <SafeAreaView edges={['bottom']} style={styles.sheet}>
           <Text style={styles.heading}>{mode === 'ride' ? 'Choose a ride' : 'Choose a courier'}</Text>
 

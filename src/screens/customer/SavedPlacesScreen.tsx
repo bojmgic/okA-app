@@ -1,33 +1,23 @@
 import { useState } from 'react'
 import { View, Text, Pressable, TextInput, ScrollView, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ArrowLeft, Home, Briefcase, Star, MapPin, Trash2, Plus } from 'lucide-react-native'
-import type { LucideIcon } from 'lucide-react-native'
+import { ArrowLeft, MapPin, Trash2, Plus } from 'lucide-react-native'
 import IconButton from '../../components/IconButton'
 import PrimaryButton from '../../components/PrimaryButton'
+import type { SavedPlace } from '../../data/savedPlaces'
 import { colors, fonts } from '../../theme'
 
 interface SavedPlacesScreenProps {
   onBack: () => void
+  places: SavedPlace[]
+  setPlaces: (updater: SavedPlace[] | ((prev: SavedPlace[]) => SavedPlace[])) => void
 }
 
-interface SavedPlace {
-  id: string
-  icon: LucideIcon
-  label: string
-  detail: string
-}
-
-// Seeded from the same three entries HomeScreen.tsx defines inline as `savedPlaces`.
-const initialPlaces: SavedPlace[] = [
-  { id: 'home', icon: Home, label: 'Home', detail: 'East Legon' },
-  { id: 'work', icon: Briefcase, label: 'Work', detail: 'Airport City' },
-  { id: 'mall', icon: Star, label: 'Accra Mall', detail: 'Frequent stop' },
-]
-
-/** Customer-only saved addresses screen — list, add, delete, all local state. */
-export default function SavedPlacesScreen({ onBack }: SavedPlacesScreenProps) {
-  const [places, setPlaces] = useState<SavedPlace[]>(initialPlaces)
+/** Customer-only saved addresses screen — list, add, delete. State is lifted
+ *  to RootApp (see `savedPlaces`/`setSavedPlaces`) and shared with
+ *  HomeScreen's quick-pick list, so a place added/removed here shows up
+ *  there too instead of the two screens drifting out of sync. */
+export default function SavedPlacesScreen({ onBack, places, setPlaces }: SavedPlacesScreenProps) {
   const [adding, setAdding] = useState(false)
   const [labelInput, setLabelInput] = useState('')
   const [addressInput, setAddressInput] = useState('')

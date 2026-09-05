@@ -12,6 +12,7 @@ const okaLogo = require('../../assets/brand/oka-logo-v3.webp')
 interface AuthScreenProps {
   role: 'customer' | 'rider'
   onDone: () => void
+  onOpenLegal?: () => void
 }
 
 /**
@@ -19,7 +20,7 @@ interface AuthScreenProps {
  * app-preview. Two steps in one screen (enter phone, then a 4-digit code)
  * rather than two separate screens, matching the linear flow it actually is.
  */
-export default function AuthScreen({ role, onDone }: AuthScreenProps) {
+export default function AuthScreen({ role, onDone, onOpenLegal }: AuthScreenProps) {
   const [step, setStep] = useState<'phone' | 'otp'>('phone')
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
@@ -88,7 +89,15 @@ export default function AuthScreen({ role, onDone }: AuthScreenProps) {
             icon={step === 'otp' ? <ShieldCheck size={15} color="#fff" /> : undefined}
             onPress={() => (step === 'phone' ? setStep('otp') : onDone())}
           />
-          <Text style={styles.terms}>By continuing you agree to okA's Terms and Privacy Policy.</Text>
+          {onOpenLegal ? (
+            <Pressable onPress={onOpenLegal}>
+              <Text style={styles.terms}>
+                By continuing you agree to okA's <Text style={styles.termsLink}>Terms and Privacy Policy</Text>.
+              </Text>
+            </Pressable>
+          ) : (
+            <Text style={styles.terms}>By continuing you agree to okA's Terms and Privacy Policy.</Text>
+          )}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -132,4 +141,5 @@ const styles = StyleSheet.create({
   editLink: { marginTop: 12, textAlign: 'center', fontFamily: fonts.sansMedium, fontSize: 12, color: colors.primary[300] },
   editLinkPressed: { opacity: 0.6 },
   terms: { marginTop: 16, textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.4)' },
+  termsLink: { color: 'rgba(255,255,255,0.75)', textDecorationLine: 'underline' },
 })

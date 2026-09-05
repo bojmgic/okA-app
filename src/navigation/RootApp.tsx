@@ -3,6 +3,7 @@ import { View, Pressable, Text, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Car, Bike } from 'lucide-react-native'
 import { vehicleOptions } from '../data/appPreview'
+import { initialSavedPlaces, type SavedPlace } from '../data/savedPlaces'
 import { colors, fonts } from '../theme'
 
 import AuthScreen from '../screens/shared/AuthScreen'
@@ -10,6 +11,10 @@ import RatingScreen from '../screens/shared/RatingScreen'
 import NotificationsScreen from '../screens/shared/NotificationsScreen'
 import SettingsScreen from '../screens/shared/SettingsScreen'
 import HelpSupportScreen from '../screens/shared/HelpSupportScreen'
+import AboutScreen from '../screens/shared/AboutScreen'
+import LegalScreen from '../screens/shared/LegalScreen'
+import CareersScreen from '../screens/shared/CareersScreen'
+import NewsroomScreen from '../screens/shared/NewsroomScreen'
 
 import HomeScreen from '../screens/customer/HomeScreen'
 import VehicleSelectScreen from '../screens/customer/VehicleSelectScreen'
@@ -44,6 +49,10 @@ type CustomerScreen =
   | 'settings'
   | 'savedPlaces'
   | 'help'
+  | 'about'
+  | 'legal'
+  | 'careers'
+  | 'newsroom'
 type DriverScreen =
   | 'auth'
   | 'onboarding'
@@ -58,6 +67,10 @@ type DriverScreen =
   | 'vehicleDocs'
   | 'payout'
   | 'rideHistory'
+  | 'about'
+  | 'legal'
+  | 'careers'
+  | 'newsroom'
 
 /**
  * Root screen switcher — mirrors the state-machine shape of AppPreview.tsx
@@ -79,6 +92,15 @@ export default function RootApp() {
   const [driverScreen, setDriverScreen] = useState<DriverScreen>('auth')
   const [online, setOnline] = useState(false)
 
+  // Lifted here (rather than local to SavedPlacesScreen) so HomeScreen's
+  // quick-pick list reflects the same data — see src/data/savedPlaces.ts.
+  const [savedPlaces, setSavedPlaces] = useState<SavedPlace[]>(initialSavedPlaces)
+
+  // LegalScreen is reachable from two different points per persona (the
+  // sign-in screen's "Terms and Privacy Policy" link, and Help & Support) —
+  // this remembers which one, so its back button returns to the right place.
+  const [legalOrigin, setLegalOrigin] = useState<'auth' | 'help'>('help')
+
   const selectedVehicleOption = vehicleOptions.find((v) => v.id === selectedVehicle) ?? vehicleOptions[0]
 
   if (persona === 'customer') {
@@ -86,8 +108,15 @@ export default function RootApp() {
       case 'auth':
         return (
           <View style={{ flex: 1 }}>
-            <AuthScreen role="customer" onDone={() => setCustomerScreen('home')} />
-            <PersonaSwitcher persona={persona} onSwitch={setPersona} />
+            <AuthScreen
+              role="customer"
+              onDone={() => setCustomerScreen('home')}
+              onOpenLegal={() => {
+                setLegalOrigin('auth')
+                setCustomerScreen('legal')
+              }}
+            />
+            {__DEV__ && <PersonaSwitcher persona={persona} onSwitch={setPersona} />}
           </View>
         )
       case 'home':
@@ -100,6 +129,7 @@ export default function RootApp() {
             onOpenProfile={() => setCustomerScreen('profile')}
             onOpenActivity={() => setCustomerScreen('activity')}
             onOpenNotifications={() => setCustomerScreen('notifications')}
+            savedPlaces={savedPlaces}
           />
         )
       case 'select':
@@ -137,6 +167,7 @@ export default function RootApp() {
             onOpenHelp={() => setCustomerScreen('help')}
             onOpenNotifications={() => setCustomerScreen('notifications')}
             onOpenActivity={() => setCustomerScreen('activity')}
+            onOpenAbout={() => setCustomerScreen('about')}
             onLogout={() => setCustomerScreen('auth')}
           />
         )
@@ -147,9 +178,31 @@ export default function RootApp() {
       case 'settings':
         return <SettingsScreen onBack={() => setCustomerScreen('profile')} />
       case 'savedPlaces':
-        return <SavedPlacesScreen onBack={() => setCustomerScreen('profile')} />
+        return <SavedPlacesScreen onBack={() => setCustomerScreen('profile')} places={savedPlaces} setPlaces={setSavedPlaces} />
       case 'help':
-        return <HelpSupportScreen onBack={() => setCustomerScreen('profile')} />
+        return (
+          <HelpSupportScreen
+            onBack={() => setCustomerScreen('profile')}
+            onOpenLegal={() => {
+              setLegalOrigin('help')
+              setCustomerScreen('legal')
+            }}
+          />
+        )
+      case 'about':
+        return (
+          <AboutScreen
+            onBack={() => setCustomerScreen('profile')}
+            onOpenCareers={() => setCustomerScreen('careers')}
+            onOpenNewsroom={() => setCustomerScreen('newsroom')}
+          />
+        )
+      case 'legal':
+        return <LegalScreen onBack={() => setCustomerScreen(legalOrigin)} />
+      case 'careers':
+        return <CareersScreen onBack={() => setCustomerScreen('about')} />
+      case 'newsroom':
+        return <NewsroomScreen onBack={() => setCustomerScreen('about')} />
     }
   }
 
@@ -157,8 +210,15 @@ export default function RootApp() {
     case 'auth':
       return (
         <View style={{ flex: 1 }}>
-          <AuthScreen role="rider" onDone={() => setDriverScreen('onboarding')} />
-          <PersonaSwitcher persona={persona} onSwitch={setPersona} />
+          <AuthScreen
+            role="rider"
+            onDone={() => setDriverScreen('onboarding')}
+            onOpenLegal={() => {
+              setLegalOrigin('auth')
+              setDriverScreen('legal')
+            }}
+          />
+          {__DEV__ && <PersonaSwitcher persona={persona} onSwitch={setPersona} />}
         </View>
       )
     case 'onboarding':
@@ -199,19 +259,42 @@ export default function RootApp() {
           onOpenVehicleDocs={() => setDriverScreen('vehicleDocs')}
           onOpenPayout={() => setDriverScreen('payout')}
           onOpenRideHistory={() => setDriverScreen('rideHistory')}
+          onOpenAbout={() => setDriverScreen('about')}
           onLogout={() => setDriverScreen('auth')}
         />
       )
     case 'settings':
       return <SettingsScreen onBack={() => setDriverScreen('profile')} />
     case 'help':
-      return <HelpSupportScreen onBack={() => setDriverScreen('profile')} />
+      return (
+        <HelpSupportScreen
+          onBack={() => setDriverScreen('profile')}
+          onOpenLegal={() => {
+            setLegalOrigin('help')
+            setDriverScreen('legal')
+          }}
+        />
+      )
     case 'vehicleDocs':
       return <DriverVehicleDocsScreen onBack={() => setDriverScreen('profile')} />
     case 'payout':
       return <DriverPayoutScreen onBack={() => setDriverScreen('profile')} />
     case 'rideHistory':
       return <DriverRideHistoryScreen onBack={() => setDriverScreen('profile')} />
+    case 'about':
+      return (
+        <AboutScreen
+          onBack={() => setDriverScreen('profile')}
+          onOpenCareers={() => setDriverScreen('careers')}
+          onOpenNewsroom={() => setDriverScreen('newsroom')}
+        />
+      )
+    case 'legal':
+      return <LegalScreen onBack={() => setDriverScreen(legalOrigin)} />
+    case 'careers':
+      return <CareersScreen onBack={() => setDriverScreen('about')} />
+    case 'newsroom':
+      return <NewsroomScreen onBack={() => setDriverScreen('about')} />
   }
 
   return <View style={styles.fallback} />
@@ -223,7 +306,9 @@ export default function RootApp() {
  * production would be two separate installs/accounts, not a runtime
  * switch). Kept here for demo/QA purposes: lets anyone flip between both
  * sides of the product without two separate builds while this is still a
- * design-system-complete-but-backend-less prototype.
+ * design-system-complete-but-backend-less prototype. Rendered only when
+ * `__DEV__` is true (both call sites below gate it) so it can never appear
+ * in a production build/release binary.
  */
 function PersonaSwitcher({ persona, onSwitch }: { persona: 'customer' | 'driver'; onSwitch: (p: 'customer' | 'driver') => void }) {
   return (

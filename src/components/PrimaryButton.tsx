@@ -15,7 +15,7 @@ interface PrimaryButtonProps {
 
 /**
  * The one recurring "big blue pill button" from the web app-preview
- * (`linear-gradient(180deg,#1D6BFF 0%,#0057E7 60%)` + inset top highlight),
+ * (`linear-gradient(180deg,#6E9AD2 0%,#4a80c8 60%)` + inset top highlight),
  * ported once here rather than re-declared per screen — every screen that
  * had a bespoke gradient button on the web side uses this instead.
  */
