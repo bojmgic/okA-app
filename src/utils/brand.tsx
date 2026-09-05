@@ -25,5 +25,8 @@ export function brand(text: string): ReactNode {
     )
     nodes.push(segments[i])
   }
-  return nodes
+  // Wrapped in one <Text> instead of returned as a bare array — RN flex
+  // containers with a `gap` style would otherwise treat each array item as
+  // its own flex child, same class of bug as the web version's fix.
+  return <Text>{nodes}</Text>
 }

@@ -34,7 +34,7 @@ const AnimatedPath = Animated.createAnimatedComponent(Path)
 const okaMotorbikeTopDown = require('../assets/vehicles/oka-motorbike-topdown.webp')
 
 const ROUTE_D =
-  'M90,620 L100,600 L100,258 Q100,242 116,242 L234,242 Q250,242 250,226 L250,142 Q250,126 266,126 L300,70'
+  'M90,620 L100,600 L100,258 Q100,242 116,242 L234,242 Q250,242 250,226 L250,86 Q250,70 266,70 L300,70'
 const RIDE_DURATION_MS = 6000
 // Matches web's motion.path draw-on transition duration (1.1s).
 const DRAW_ON_DURATION_MS = 1100

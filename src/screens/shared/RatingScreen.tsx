@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Check } from 'lucide-react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import { Check, ThumbsUp } from 'lucide-react-native'
 import { VehicleGhost } from '../../components/GhostSilhouette'
 import PrimaryButton from '../../components/PrimaryButton'
-import { colors, fonts } from '../../theme'
-import { brand } from '../../utils/brand'
+import { colors, fonts, primaryButtonGradient } from '../../theme'
 
 interface RatingScreenProps {
   subjectName: string
@@ -43,18 +43,27 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
         <Text style={styles.rateLabel}>Rate {subjectName}</Text>
         <Text style={styles.subjectDetail}>{subjectDetail}</Text>
 
-        {/* 1-5 scale, same interaction as a star rating, but each unit is a
-            small "okA" mark instead of a star — filled once selected. */}
-        <View style={styles.okaRow}>
+        {/* 1-5 scale, same interaction as a star rating, but each unit is an
+            okA-branded thumbs up filled with the app's primary gradient
+            instead of a star. */}
+        <View style={styles.thumbsRow}>
           {[1, 2, 3, 4, 5].map((n) => (
             <Pressable
               key={n}
               onPress={() => setRating(n)}
               hitSlop={4}
-              accessibilityLabel={`Rate ${n} okA`}
-              style={({ pressed }) => [styles.okaChip, rating >= n && styles.okaChipActive, pressed && styles.okaChipPressed]}
+              accessibilityLabel={`Rate ${n} thumbs up`}
+              style={({ pressed }) => [pressed && styles.thumbPressed]}
             >
-              <Text style={[styles.okaChipText, rating >= n && styles.okaChipTextActive]}>{brand('okA')}</Text>
+              {rating >= n ? (
+                <LinearGradient colors={primaryButtonGradient.colors} locations={primaryButtonGradient.locations} style={styles.thumbBtn}>
+                  <ThumbsUp size={20} color="#fff" fill="#fff" />
+                </LinearGradient>
+              ) : (
+                <View style={[styles.thumbBtn, styles.thumbBtnIdle]}>
+                  <ThumbsUp size={20} color={colors.ink.light} />
+                </View>
+              )}
             </Pressable>
           ))}
         </View>
@@ -96,21 +105,10 @@ const styles = StyleSheet.create({
   avatarText: { fontFamily: fonts.display, fontSize: 18, color: '#fff' },
   rateLabel: { marginTop: 10, fontFamily: fonts.sansSemibold, fontSize: 14, color: colors.ink.DEFAULT },
   subjectDetail: { fontSize: 12, color: colors.ink.light },
-  okaRow: { flexDirection: 'row', gap: 8, marginTop: 16 },
-  okaChip: {
-    height: 38,
-    width: 38,
-    borderRadius: 19,
-    borderWidth: 1.5,
-    borderColor: 'rgba(11,11,15,0.15)',
-    backgroundColor: colors.surface.tint,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  okaChipActive: { borderColor: colors.primary.DEFAULT, backgroundColor: colors.primary.DEFAULT },
-  okaChipPressed: { transform: [{ scale: 0.9 }] },
-  okaChipText: { fontFamily: fonts.sansBold, fontSize: 10, color: colors.ink.light },
-  okaChipTextActive: { color: '#fff' },
+  thumbsRow: { flexDirection: 'row', gap: 8, marginTop: 16 },
+  thumbBtn: { height: 40, width: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
+  thumbBtnIdle: { backgroundColor: colors.surface.tint, borderWidth: 1.5, borderColor: 'rgba(11,11,15,0.15)' },
+  thumbPressed: { transform: [{ scale: 0.9 }] },
   tagRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 16 },
   tag: { borderRadius: 999, borderWidth: 1, borderColor: 'rgba(11,11,15,0.15)', paddingHorizontal: 12, paddingVertical: 6 },
   tagActive: { borderColor: colors.primary.DEFAULT, backgroundColor: colors.primary.DEFAULT + '1A' },
