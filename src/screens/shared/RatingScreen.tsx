@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Check, ThumbsUp, ThumbsDown } from 'lucide-react-native'
+import { Check } from 'lucide-react-native'
 import { VehicleGhost } from '../../components/GhostSilhouette'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface RatingScreenProps {
   subjectName: string
@@ -17,7 +18,7 @@ interface RatingScreenProps {
 
 /** Trip receipt + rating in one screen — ported from RatingScreen.tsx on the web app-preview. */
 export default function RatingScreen({ subjectName, subjectDetail, fareGHS, tripLabel, tags, onDone }: RatingScreenProps) {
-  const [rating, setRating] = useState<'up' | 'down' | null>(null)
+  const [rating, setRating] = useState(0)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const initials = subjectName.split(' ').map((n) => n[0]).join('')
 
@@ -42,26 +43,23 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
         <Text style={styles.rateLabel}>Rate {subjectName}</Text>
         <Text style={styles.subjectDetail}>{subjectDetail}</Text>
 
-        <View style={styles.thumbsRow}>
-          <Pressable
-            onPress={() => setRating('down')}
-            hitSlop={6}
-            accessibilityLabel="Rate thumbs down"
-            style={({ pressed }) => [styles.thumbBtn, rating === 'down' && styles.thumbBtnDownActive, pressed && styles.thumbPressed]}
-          >
-            <ThumbsDown size={26} color={rating === 'down' ? '#DC2626' : colors.ink.light} fill={rating === 'down' ? '#DC2626' : 'transparent'} />
-          </Pressable>
-          <Pressable
-            onPress={() => setRating('up')}
-            hitSlop={6}
-            accessibilityLabel="Rate thumbs up"
-            style={({ pressed }) => [styles.thumbBtn, rating === 'up' && styles.thumbBtnUpActive, pressed && styles.thumbPressed]}
-          >
-            <ThumbsUp size={26} color={rating === 'up' ? colors.primary.DEFAULT : colors.ink.light} fill={rating === 'up' ? colors.primary.DEFAULT : 'transparent'} />
-          </Pressable>
+        {/* 1-5 scale, same interaction as a star rating, but each unit is a
+            small "okA" mark instead of a star — filled once selected. */}
+        <View style={styles.okaRow}>
+          {[1, 2, 3, 4, 5].map((n) => (
+            <Pressable
+              key={n}
+              onPress={() => setRating(n)}
+              hitSlop={4}
+              accessibilityLabel={`Rate ${n} okA`}
+              style={({ pressed }) => [styles.okaChip, rating >= n && styles.okaChipActive, pressed && styles.okaChipPressed]}
+            >
+              <Text style={[styles.okaChipText, rating >= n && styles.okaChipTextActive]}>{brand('okA')}</Text>
+            </Pressable>
+          ))}
         </View>
 
-        {rating !== null && (
+        {rating > 0 && (
           <View style={styles.tagRow}>
             {tags.map((tag) => {
               const active = selectedTags.includes(tag)
@@ -78,7 +76,7 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
           </View>
         )}
 
-        <PrimaryButton label="Submit rating" disabled={rating === null} onPress={onDone} style={{ marginTop: 20 }} />
+        <PrimaryButton label="Submit rating" disabled={rating === 0} onPress={onDone} style={{ marginTop: 20 }} />
         <Pressable onPress={onDone} style={({ pressed }) => [pressed && styles.skipPressed]}>
           <Text style={styles.skip}>Skip</Text>
         </Pressable>
@@ -98,11 +96,21 @@ const styles = StyleSheet.create({
   avatarText: { fontFamily: fonts.display, fontSize: 18, color: '#fff' },
   rateLabel: { marginTop: 10, fontFamily: fonts.sansSemibold, fontSize: 14, color: colors.ink.DEFAULT },
   subjectDetail: { fontSize: 12, color: colors.ink.light },
-  thumbsRow: { flexDirection: 'row', gap: 16, marginTop: 16 },
-  thumbBtn: { height: 56, width: 56, borderRadius: 28, borderWidth: 2, borderColor: 'rgba(11,11,15,0.15)', alignItems: 'center', justifyContent: 'center' },
-  thumbBtnUpActive: { borderColor: colors.primary.DEFAULT, backgroundColor: colors.primary.DEFAULT + '1A' },
-  thumbBtnDownActive: { borderColor: '#DC2626', backgroundColor: '#FEE2E2' },
-  thumbPressed: { transform: [{ scale: 0.88 }] },
+  okaRow: { flexDirection: 'row', gap: 8, marginTop: 16 },
+  okaChip: {
+    height: 38,
+    width: 38,
+    borderRadius: 19,
+    borderWidth: 1.5,
+    borderColor: 'rgba(11,11,15,0.15)',
+    backgroundColor: colors.surface.tint,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  okaChipActive: { borderColor: colors.primary.DEFAULT, backgroundColor: colors.primary.DEFAULT },
+  okaChipPressed: { transform: [{ scale: 0.9 }] },
+  okaChipText: { fontFamily: fonts.sansBold, fontSize: 10, color: colors.ink.light },
+  okaChipTextActive: { color: '#fff' },
   tagRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 16 },
   tag: { borderRadius: 999, borderWidth: 1, borderColor: 'rgba(11,11,15,0.15)', paddingHorizontal: 12, paddingVertical: 6 },
   tagActive: { borderColor: colors.primary.DEFAULT, backgroundColor: colors.primary.DEFAULT + '1A' },
