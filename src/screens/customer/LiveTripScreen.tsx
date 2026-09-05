@@ -9,6 +9,7 @@ import CouponButton from '../../components/CouponButton'
 import WaveCap from '../../components/WaveCap'
 import { vehicleOptions, mockRider, sendStatusSteps } from '../../data/appPreview'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface LiveTripScreenProps {
   mode: 'ride' | 'send'
@@ -72,7 +73,7 @@ export default function LiveTripScreen({ mode, vehicleId, onEnd }: LiveTripScree
                 <View>
                   <Text style={styles.riderName}>{mockRider.name}</Text>
                   <Text style={styles.riderMeta}>
-                    {mockRider.rating} · {vehicle.name} · {mockRider.plate}
+                    {mockRider.rating} · {brand(vehicle.name)} · {mockRider.plate}
                   </Text>
                 </View>
               </View>

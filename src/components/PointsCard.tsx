@@ -1,6 +1,7 @@
 import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native'
 import { Sparkles } from 'lucide-react-native'
 import { colors, fonts } from '../theme'
+import { brand } from '../utils/brand'
 
 type RedeemOptionType = { id: string; label: string; pointsCost: number }
 
@@ -21,7 +22,7 @@ export default function PointsCard({ balance, tier, nextTier, pointsToNextTier, 
       <View style={styles.headerRow}>
         <View style={styles.titleRow}>
           <Sparkles size={14} color={colors.primary.DEFAULT} />
-          <Text style={styles.title}>okA Points</Text>
+          <Text style={styles.title}>{brand("okA Points")}</Text>
         </View>
         <View style={styles.tierBadge}>
           <Text style={styles.tierBadgeText}>{tier}</Text>
@@ -40,7 +41,7 @@ export default function PointsCard({ balance, tier, nextTier, pointsToNextTier, 
         {redeemOptions.map((r) => (
           <Pressable key={r.id} onPress={() => onRedeem?.(r)} style={({ pressed }) => [styles.chip, pressed && { opacity: 0.7 }]}>
             <Text style={styles.chipText}>
-              {r.label} · {r.pointsCost} pts
+              {brand(r.label)} · {r.pointsCost} pts
             </Text>
           </Pressable>
         ))}

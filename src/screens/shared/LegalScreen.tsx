@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ArrowLeft } from 'lucide-react-native'
 import IconButton from '../../components/IconButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface LegalScreenProps {
   onBack: () => void
@@ -97,13 +98,13 @@ export default function LegalScreen({ onBack, initialDoc = 'privacy' }: LegalScr
 
       <ScrollView contentContainerStyle={styles.list}>
         <Text style={styles.docTitle}>{entry.title}</Text>
-        {entry.body && <Text style={styles.paragraph}>{entry.body}</Text>}
+        {entry.body && <Text style={styles.paragraph}>{brand(entry.body)}</Text>}
         {entry.sections && (
           <View style={{ gap: 20, marginTop: 4 }}>
             {entry.sections.map((section) => (
               <View key={section.heading}>
                 <Text style={styles.sectionHeading}>{section.heading}</Text>
-                <Text style={styles.paragraph}>{section.text}</Text>
+                <Text style={styles.paragraph}>{brand(section.text)}</Text>
               </View>
             ))}
           </View>

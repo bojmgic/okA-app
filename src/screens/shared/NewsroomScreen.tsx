@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ArrowLeft, Mic } from 'lucide-react-native'
 import IconButton from '../../components/IconButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface NewsroomScreenProps {
   onBack: () => void
@@ -69,11 +70,8 @@ export default function NewsroomScreen({ onBack }: NewsroomScreenProps) {
         <Text style={styles.title}>Newsroom</Text>
       </View>
 
-      <Text style={[styles.heroEyebrow, { paddingHorizontal: 20 }]}>The okA Chronicle.</Text>
-      <Text style={[styles.heroBody, { paddingHorizontal: 20 }]}>
-        Rider spotlights, app updates, and community stories from across the okA network — representative content,
-        not live press releases.
-      </Text>
+      <Text style={[styles.heroEyebrow, { paddingHorizontal: 20 }]}>{brand("The okA Chronicle.")}</Text>
+      <Text style={[styles.heroBody, { paddingHorizontal: 20 }]}>{brand("\n        Rider spotlights, app updates, and community stories from across the okA network — representative content,\n        not live press releases.\n      ")}</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsRow}>
         {categories.map((c) => (
@@ -87,15 +85,15 @@ export default function NewsroomScreen({ onBack }: NewsroomScreenProps) {
         {featured && (
           <View style={styles.featuredCard}>
             <Text style={styles.featuredTag}>Featured — {featured.date}</Text>
-            <Text style={styles.featuredHeadline}>{featured.headline}</Text>
-            <Text style={styles.featuredExcerpt}>{featured.excerpt}</Text>
+            <Text style={styles.featuredHeadline}>{brand(featured.headline)}</Text>
+            <Text style={styles.featuredExcerpt}>{brand(featured.excerpt)}</Text>
           </View>
         )}
 
         {category === 'Podcast' ? (
           <View style={styles.emptyCard}>
             <Mic size={20} color={colors.primary.DEFAULT} />
-            <Text style={styles.emptyTitle}>The okA Chronicle podcast is coming soon.</Text>
+            <Text style={styles.emptyTitle}>{brand("The okA Chronicle podcast is coming soon.")}</Text>
             <Text style={styles.emptyBody}>Episodes on riders, growth, and the future of mobility in Ghana.</Text>
           </View>
         ) : filtered.length > 0 ? (
@@ -103,8 +101,8 @@ export default function NewsroomScreen({ onBack }: NewsroomScreenProps) {
             {filtered.map((s) => (
               <View key={s.id} style={styles.storyCard}>
                 <Text style={styles.storyDate}>{s.date}</Text>
-                <Text style={styles.storyHeadline}>{s.headline}</Text>
-                <Text style={styles.storyExcerpt}>{s.excerpt}</Text>
+                <Text style={styles.storyHeadline}>{brand(s.headline)}</Text>
+                <Text style={styles.storyExcerpt}>{brand(s.excerpt)}</Text>
               </View>
             ))}
           </View>

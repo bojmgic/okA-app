@@ -2,6 +2,7 @@ import { Pressable, Text, View, StyleSheet, type StyleProp, type ViewStyle } fro
 import Svg, { Path } from 'react-native-svg'
 import type { LucideIcon } from 'lucide-react-native'
 import { colors, fonts } from '../theme'
+import { brand } from '../utils/brand'
 
 interface CouponButtonProps {
   icon: LucideIcon
@@ -45,7 +46,7 @@ export default function CouponButton({ icon: Icon, label, tone = 'default', onPr
         <Icon size={16} color={isDanger ? '#DC2626' : colors.primary.DEFAULT} />
       </View>
       <Text style={[styles.label, isDanger && styles.labelDanger]} numberOfLines={1}>
-        {label}
+        {brand(label)}
       </Text>
     </Pressable>
   )

@@ -7,6 +7,7 @@ import IconButton from '../../components/IconButton'
 import TabBar from '../../components/TabBar'
 import WaveCap from '../../components/WaveCap'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface ActivityScreenProps {
   onBack: () => void
@@ -41,10 +42,10 @@ export default function ActivityScreen({ onBack }: ActivityScreenProps) {
                       </View>
                       <View style={{ flex: 1 }}>
                         <Text style={styles.tripLabel} numberOfLines={1}>
-                          {trip.label}
+                          {brand(trip.label)}
                         </Text>
                         <Text style={styles.tripMeta}>
-                          {trip.vehicle} · {trip.time}
+                          {brand(trip.vehicle)} · {trip.time}
                           {trip.status === 'Cancelled' && <Text style={{ color: '#DC2626' }}> · Cancelled</Text>}
                         </Text>
                       </View>

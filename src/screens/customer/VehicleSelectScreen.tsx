@@ -7,6 +7,7 @@ import PrimaryButton from '../../components/PrimaryButton'
 import WaveCap from '../../components/WaveCap'
 import { vehicleOptions } from '../../data/appPreview'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface VehicleSelectScreenProps {
   mode: 'ride' | 'send'
@@ -59,7 +60,7 @@ export default function VehicleSelectScreen({ mode, selected, onSelect, onBack, 
                 </View>
               )}
               <Image source={active.image} style={styles.vehicleImage} resizeMode="contain" />
-              <Text style={styles.vehicleName}>{active.name}</Text>
+              <Text style={styles.vehicleName}>{brand(active.name)}</Text>
               <Text style={styles.vehicleTagline}>{active.tagline}</Text>
               <View style={styles.metaRow}>
                 <Text style={styles.metaText}>{active.etaMins} min away</Text>

@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { VehicleGhost } from '../../components/GhostSilhouette'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 const okaLogo = require('../../assets/brand/oka-logo-v3.webp')
 
@@ -36,7 +37,7 @@ export default function AuthScreen({ role, onDone, onOpenLegal }: AuthScreenProp
         <View style={styles.header}>
           <Image source={okaLogo} style={styles.logo} resizeMode="contain" />
           <Text style={styles.title}>
-            {step === 'phone' ? (role === 'customer' ? 'Get moving with okA' : 'Start earning with okA') : 'Enter the code'}
+            {step === 'phone' ? brand(role === 'customer' ? 'Get moving with okA' : 'Start earning with okA') : 'Enter the code'}
           </Text>
           <Text style={styles.subtitle}>
             {step === 'phone' ? "We'll text you a code to sign in — no password to remember." : `We sent a 4-digit code to ${phone || 'your number'}.`}
@@ -91,12 +92,11 @@ export default function AuthScreen({ role, onDone, onOpenLegal }: AuthScreenProp
           />
           {onOpenLegal ? (
             <Pressable onPress={onOpenLegal}>
-              <Text style={styles.terms}>
-                By continuing you agree to okA's <Text style={styles.termsLink}>Terms and Privacy Policy</Text>.
+              <Text style={styles.terms}>{brand("\n                By continuing you agree to okA's ")}<Text style={styles.termsLink}>Terms and Privacy Policy</Text>.
               </Text>
             </Pressable>
           ) : (
-            <Text style={styles.terms}>By continuing you agree to okA's Terms and Privacy Policy.</Text>
+            <Text style={styles.terms}>{brand("By continuing you agree to okA's Terms and Privacy Policy.")}</Text>
           )}
         </View>
       </KeyboardAvoidingView>

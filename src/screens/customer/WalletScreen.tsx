@@ -13,6 +13,7 @@ import PointsCard from '../../components/PointsCard'
 import MissionCard from '../../components/MissionCard'
 import WeeklyMiniChart from '../../components/WeeklyMiniChart'
 import { colors, fonts, primaryButtonGradient } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface WalletScreenProps {
   onBack: () => void
@@ -80,7 +81,7 @@ export default function WalletScreen({ onBack, onOpenProfile }: WalletScreenProp
           {walletTransactions.map((tx, i) => (
             <Animated.View key={tx.id} entering={FadeInDown.delay(i * 40).duration(250)} style={styles.txRow}>
               <View>
-                <Text style={styles.txLabel}>{tx.label}</Text>
+                <Text style={styles.txLabel}>{brand(tx.label)}</Text>
                 <Text style={styles.txTime}>{tx.time}</Text>
               </View>
               <Text style={[styles.txAmount, tx.amountGHS >= 0 && styles.txAmountPositive]}>

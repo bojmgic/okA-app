@@ -10,6 +10,7 @@ import PointsCard from '../../components/PointsCard'
 import MissionCard from '../../components/MissionCard'
 import CouponButton from '../../components/CouponButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface DriverProfileScreenProps {
   onBack: () => void
@@ -62,7 +63,7 @@ export default function DriverProfileScreen({
             <View style={{ flex: 1 }}>
               <Text style={styles.name}>{mockRider.name}</Text>
               <Text style={styles.meta}>
-                {mockRider.vehicle} · {mockRider.plate}
+                {brand(mockRider.vehicle)} · {mockRider.plate}
               </Text>
             </View>
             <StampMark label="Verified" tone="white" style={{ width: 84 }} />

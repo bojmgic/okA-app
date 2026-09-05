@@ -6,6 +6,7 @@ import type { LucideIcon } from 'lucide-react-native'
 import IconButton from '../../components/IconButton'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface HelpSupportScreenProps {
   onBack: () => void
@@ -141,21 +142,21 @@ export default function HelpSupportScreen({ onBack, onOpenLegal }: HelpSupportSc
         <Text style={styles.sectionLabel}>Frequently asked</Text>
         {faqGroups.map((group) => (
           <View key={group.id} style={{ marginTop: 10 }}>
-            <Text style={styles.groupTitle}>{group.title}</Text>
+            <Text style={styles.groupTitle}>{brand(group.title)}</Text>
             <View style={styles.card}>
               {group.items.map((item, i) => {
                 const isOpen = expanded === item.id
                 return (
                   <View key={item.id} style={i > 0 ? styles.itemBorder : undefined}>
                     <Pressable onPress={() => toggle(item.id)} style={styles.qRow}>
-                      <Text style={styles.qText}>{item.q}</Text>
+                      <Text style={styles.qText}>{brand(item.q)}</Text>
                       <View style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}>
                         <ChevronDown size={16} color={colors.ink.light} />
                       </View>
                     </Pressable>
                     {isOpen && (
                       <View style={styles.aWrap}>
-                        <Text style={styles.aText}>{item.a}</Text>
+                        <Text style={styles.aText}>{brand(item.a)}</Text>
                       </View>
                     )}
                   </View>

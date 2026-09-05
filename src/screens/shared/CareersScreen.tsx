@@ -4,6 +4,7 @@ import { ArrowLeft, Palette, Code2, Bike, Handshake, Megaphone, Newspaper, Mail 
 import type { LucideIcon } from 'lucide-react-native'
 import IconButton from '../../components/IconButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface CareersScreenProps {
   onBack: () => void
@@ -34,7 +35,7 @@ export default function CareersScreen({ onBack }: CareersScreenProps) {
           started.
         </Text>
 
-        <Text style={styles.sectionLabel}>Life at okA</Text>
+        <Text style={styles.sectionLabel}>{brand("Life at okA")}</Text>
         <Text style={styles.sectionTitle}>Fast-moving, street-smart, real-world.</Text>
         <Text style={styles.paragraph}>
           We are a team of fast-moving operators, designers, and builders who care deeply about real-world impact. We
@@ -57,7 +58,7 @@ export default function CareersScreen({ onBack }: CareersScreenProps) {
               <View style={styles.deptIcon}>
                 <d.icon size={18} color={colors.primary.DEFAULT} />
               </View>
-              <Text style={styles.deptName}>{d.name}</Text>
+              <Text style={styles.deptName}>{brand(d.name)}</Text>
             </View>
           ))}
         </View>

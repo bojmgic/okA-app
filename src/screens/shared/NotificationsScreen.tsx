@@ -6,6 +6,7 @@ import { Bike, Tag, ShieldCheck, Sparkles, ArrowLeft } from 'lucide-react-native
 import { notifications as mockNotifications } from '../../data/appPreview'
 import IconButton from '../../components/IconButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface NotificationsScreenProps {
   onBack: () => void
@@ -56,10 +57,10 @@ export default function NotificationsScreen({ onBack }: NotificationsScreenProps
                   </View>
                   <View style={{ flex: 1 }}>
                     <View style={styles.cardTitleRow}>
-                      <Text style={styles.cardTitle}>{n.title}</Text>
+                      <Text style={styles.cardTitle}>{brand(n.title)}</Text>
                       {n.unread && <View style={styles.dot} />}
                     </View>
-                    <Text style={styles.cardBody}>{n.body}</Text>
+                    <Text style={styles.cardBody}>{brand(n.body)}</Text>
                     <Text style={styles.cardTime}>{n.time}</Text>
                   </View>
                 </Pressable>

@@ -2,6 +2,7 @@ import { Pressable, Text, StyleSheet, ActivityIndicator, type StyleProp, type Vi
 import { LinearGradient } from 'expo-linear-gradient'
 import { fonts } from '../theme'
 import { primaryButtonGradient, darkButtonGradient } from '../theme/colors'
+import { brand } from '../utils/brand'
 
 interface PrimaryButtonProps {
   label: string
@@ -34,7 +35,7 @@ export default function PrimaryButton({ label, onPress, disabled, loading, tone 
           ) : (
             <>
               {icon}
-              <Text style={styles.label}>{label}</Text>
+              <Text style={styles.label}>{brand(label)}</Text>
             </>
           )}
         </LinearGradient>

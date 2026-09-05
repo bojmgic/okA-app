@@ -5,6 +5,7 @@ import type { LucideIcon } from 'lucide-react-native'
 import IconButton from '../../components/IconButton'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
+import { brand } from '../../utils/brand'
 
 interface AboutScreenProps {
   onBack: () => void
@@ -40,15 +41,12 @@ export default function AboutScreen({ onBack, onOpenCareers, onOpenNewsroom }: A
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
       <View style={styles.header}>
         <IconButton icon={ArrowLeft} onPress={onBack} accessibilityLabel="Back" />
-        <Text style={styles.title}>About okA</Text>
+        <Text style={styles.title}>{brand("About okA")}</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.list}>
         <Text style={styles.heroEyebrow}>Ghana in motion, by design.</Text>
-        <Text style={styles.heroBody}>
-          okA Ghana is a logistics company providing delivery, mobility and business logistics solutions through
-          people and technology — making every movement easily trackable, manageable and reliable.
-        </Text>
+        <Text style={styles.heroBody}>{brand("\n          okA Ghana is a logistics company providing delivery, mobility and business logistics solutions through\n          people and technology — making every movement easily trackable, manageable and reliable.\n        ")}</Text>
 
         <View style={styles.statsRow}>
           <View style={styles.statBox}>
@@ -67,44 +65,19 @@ export default function AboutScreen({ onBack, onOpenCareers, onOpenNewsroom }: A
 
         <Text style={styles.sectionLabel}>Our story — 2025</Text>
         <Text style={styles.sectionTitle}>From a basketball court to a movement.</Text>
-        <Text style={styles.paragraph}>
-          The story of okA didn&rsquo;t start in a corporate boardroom. It began on a basketball court after a match
-          between friends. A simple question was thrown into the air: What can we build to serve society if we have
-          zero capital, relying only on dream and skill?
-        </Text>
-        <Text style={styles.paragraph}>
-          Looking closely at the Ghanaian streets, the founders saw two major problems: the heavy stigma surrounding
-          &ldquo;Okada&rdquo; riders whose professional dignity was routinely overlooked, and a logistics system where
-          customers had to rely on luck and &ldquo;faith&rdquo; just to get packages delivered safely. okA was born to
-          change that.
-        </Text>
-        <Text style={styles.paragraph}>
-          Refining the street language from &ldquo;Okada&rdquo; to &ldquo;Okadah&rdquo; and finally to okA, the
-          movement evolved into a high-standard logistics platform built on community and modern technology. Growing
-          organically through simple WhatsApp and phone calls, okA brought over 150 riders into the fold and
-          completed hundreds of deliveries on pure trust and grit.
-        </Text>
-        <Text style={styles.paragraph}>
-          Today, okA combines that grassroots foundation with digital infrastructure: taking a label once used in
-          shame and turning it into a crown of service.
-        </Text>
+        <Text style={styles.paragraph}>{brand("\n          The story of okA didn&rsquo;t start in a corporate boardroom. It began on a basketball court after a match\n          between friends. A simple question was thrown into the air: What can we build to serve society if we have\n          zero capital, relying only on dream and skill?\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          Looking closely at the Ghanaian streets, the founders saw two major problems: the heavy stigma surrounding\n          &ldquo;Okada&rdquo; riders whose professional dignity was routinely overlooked, and a logistics system where\n          customers had to rely on luck and &ldquo;faith&rdquo; just to get packages delivered safely. okA was born to\n          change that.\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          Refining the street language from &ldquo;Okada&rdquo; to &ldquo;Okadah&rdquo; and finally to okA, the\n          movement evolved into a high-standard logistics platform built on community and modern technology. Growing\n          organically through simple WhatsApp and phone calls, okA brought over 150 riders into the fold and\n          completed hundreds of deliveries on pure trust and grit.\n        ")}</Text>
+        <Text style={styles.paragraph}>{brand("\n          Today, okA combines that grassroots foundation with digital infrastructure: taking a label once used in\n          shame and turning it into a crown of service.\n        ")}</Text>
 
         <View style={styles.growthCard}>
           <Text style={styles.growthEyebrow}>Our Growth — 2026</Text>
-          <Text style={styles.growthBody}>
-            Today, okA continues to grow from that foundation. Every successful delivery, every satisfied customer
-            and every rider who proudly represents the okA brand adds another brick to what we are building.
-          </Text>
+          <Text style={styles.growthBody}>{brand("\n            Today, okA continues to grow from that foundation. Every successful delivery, every satisfied customer\n            and every rider who proudly represents the okA brand adds another brick to what we are building.\n          ")}</Text>
         </View>
 
         <Text style={styles.sectionLabel}>Founders</Text>
         <Text style={styles.sectionTitle}>People before capital.</Text>
-        <Text style={styles.paragraph}>
-          Founded by a group of Ghanaian friends, engineers, and visionaries, the team proved that people don&rsquo;t
-          follow money; they follow heart. Driven by human potential, the founders built okA to elevate rider
-          dignity, provide enterprise-grade reliability for local commerce, and show that &ldquo;nothing&rdquo;
-          becomes &ldquo;something&rdquo; when a community moves together.
-        </Text>
+        <Text style={styles.paragraph}>{brand("\n          Founded by a group of Ghanaian friends, engineers, and visionaries, the team proved that people don&rsquo;t\n          follow money; they follow heart. Driven by human potential, the founders built okA to elevate rider\n          dignity, provide enterprise-grade reliability for local commerce, and show that &ldquo;nothing&rdquo;\n          becomes &ldquo;something&rdquo; when a community moves together.\n        ")}</Text>
         <View style={styles.quoteBlock}>
           <Text style={styles.quoteText}>
             &ldquo;Great movements don&rsquo;t begin when everything is available. They begin when people agree on a
@@ -113,7 +86,7 @@ export default function AboutScreen({ onBack, onOpenCareers, onOpenNewsroom }: A
         </View>
 
         <Text style={styles.sectionLabel}>The People</Text>
-        <Text style={styles.sectionTitle}>The people who keep okA moving.</Text>
+        <Text style={styles.sectionTitle}>{brand("The people who keep okA moving.")}</Text>
         <View style={{ gap: 10, marginTop: 12 }}>
           {peopleItems.map((person) => (
             <View key={person.name} style={styles.personCard}>
