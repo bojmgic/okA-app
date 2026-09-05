@@ -129,12 +129,20 @@ const styles = StyleSheet.create({
   locationRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 2 },
   locationText: { fontFamily: fonts.sansSemibold, fontSize: 14, color: '#fff' },
   notifDot: { position: 'absolute', top: 2, right: 2, height: 8, width: 8, borderRadius: 4, backgroundColor: colors.primary[300], borderWidth: 2, borderColor: colors.primary[900] },
-  modeToggle: { marginTop: 16, flexDirection: 'row', borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.1)', padding: 4 },
+  // Toggle sits low enough in the topBand gradient that it's mostly faded
+  // to transparent there, so the light map behind it was bleeding through
+  // the old 10%-white tint and making "Ride" unreadable against it. A
+  // darker, more opaque backdrop makes the toggle legible on its own,
+  // independent of exactly where the gradient fade lands.
+  modeToggle: { marginTop: 16, flexDirection: 'row', borderRadius: 999, backgroundColor: 'rgba(11,26,46,0.45)', padding: 4 },
   modeTogglePressed: { opacity: 0.85 },
   modePillActive: { borderRadius: 999, paddingVertical: 8, alignItems: 'center' },
-  modePill: { borderRadius: 999, paddingVertical: 8, alignItems: 'center' },
+  // Gets its own subtle chip background too, rather than relying solely on
+  // modeToggle's tint — keeps the inactive state visible as a distinct pill
+  // instead of flattening into whatever is behind the toggle.
+  modePill: { borderRadius: 999, paddingVertical: 8, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.08)' },
   modeTextActive: { color: '#fff', fontFamily: fonts.sansSemibold, fontSize: 13 },
-  modeText: { color: 'rgba(255,255,255,0.7)', fontFamily: fonts.sansSemibold, fontSize: 13 },
+  modeText: { color: 'rgba(255,255,255,0.85)', fontFamily: fonts.sansSemibold, fontSize: 13 },
   bottomArea: { position: 'absolute', left: 20, right: 20 },
   searchBar: { flexDirection: 'row', alignItems: 'center', gap: 12, borderRadius: 16, backgroundColor: '#fff', paddingHorizontal: 16, paddingVertical: 16, shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 6 },
   searchBarPressed: { transform: [{ scale: 0.98 }] },
