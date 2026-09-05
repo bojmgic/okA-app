@@ -1,16 +1,39 @@
 {
-    "expo": {
-          "name": "okA-app",
-          "slug": "okA-app",
-          "version": "1.0.0",
-          "orientation": "portrait",
-          "userInterfaceStyle": "light",
-          "ios": {
-                  "supportsTablet": true
-          },
-          "android": {
-                  "predictiveBackGestureEnabled": false
-          },
-          "web": {}
-    }
+  "expo": {
+    "name": "okA-app",
+    "slug": "okA-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon-v2.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bojmgic.okAapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#4a80c8",
+        "foregroundImage": "./assets/android-icon-foreground-v2.png",
+        "backgroundImage": "./assets/android-icon-background-v2.png",
+        "monochromeImage": "./assets/android-icon-monochrome-v2.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.bojmgic.okAapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon-v2.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9b4bf291-ff15-4bc2-9af1-ebc0e86ac669"
+      }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-splash-screen"
+    ]
+  }
 }

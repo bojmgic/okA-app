@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Pressable, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, TextInput, Image, StyleSheet, Pressable, KeyboardAvoidingView, Platform } from 'react-native'
 import Animated, { FadeIn } from 'react-native-reanimated'
 import { Phone, ShieldCheck } from 'lucide-react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,7 +7,7 @@ import { VehicleGhost } from '../../components/GhostSilhouette'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
 
-const okaLogo = undefined
+const okaLogo = require('../../assets/brand/oka-logo-v3.webp')
 
 interface AuthScreenProps {
   role: 'customer' | 'rider'
@@ -30,9 +30,10 @@ export default function AuthScreen({ role, onDone }: AuthScreenProps) {
   return (
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
-        <VehicleGhost src={okaLogo} top={220} left={90} width={176} rotate={-6} opacity={0.1} />
+        <VehicleGhost top={220} left={90} width={176} rotate={-6} opacity={0.1} />
 
         <View style={styles.header}>
+          <Image source={okaLogo} style={styles.logo} resizeMode="contain" />
           <Text style={styles.title}>
             {step === 'phone' ? (role === 'customer' ? 'Get moving with okA' : 'Start earning with okA') : 'Enter the code'}
           </Text>
@@ -73,7 +74,7 @@ export default function AuthScreen({ role, onDone }: AuthScreenProps) {
                 placeholder="Type the 4-digit code"
                 placeholderTextColor="rgba(255,255,255,0.4)"
               />
-              <Pressable onPress={() => setStep('phone')}>
+              <Pressable onPress={() => setStep('phone')} style={({ pressed }) => [pressed && styles.editLinkPressed]}>
                 <Text style={styles.editLink}>Wrong number? Edit</Text>
               </Pressable>
             </Animated.View>
@@ -96,7 +97,8 @@ export default function AuthScreen({ role, onDone }: AuthScreenProps) {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.primary[900], paddingHorizontal: 24, paddingBottom: 16 },
-  header: { marginTop: 24 },
+  header: { marginTop: 56 },
+  logo: { height: 32, width: 32 * (1672 / 941), marginBottom: 24 },
   title: { fontFamily: fonts.display, fontSize: 26, color: '#fff' },
   subtitle: { marginTop: 6, fontFamily: fonts.sans, fontSize: 14, color: 'rgba(255,255,255,0.6)' },
   phoneField: {
@@ -128,5 +130,6 @@ const styles = StyleSheet.create({
   otpDigit: { fontFamily: fonts.display, fontSize: 18, color: colors.ink.DEFAULT },
   hiddenOtpInput: { marginTop: 16, textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: fonts.sans },
   editLink: { marginTop: 12, textAlign: 'center', fontFamily: fonts.sansMedium, fontSize: 12, color: colors.primary[300] },
+  editLinkPressed: { opacity: 0.6 },
   terms: { marginTop: 16, textAlign: 'center', fontSize: 11, color: 'rgba(255,255,255,0.4)' },
 })

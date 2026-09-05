@@ -6,7 +6,8 @@ import IconButton from '../../components/IconButton'
 import StampMark from '../../components/StampMark'
 import TicketDivider from '../../components/TicketDivider'
 import CouponButton from '../../components/CouponButton'
-import { vehicleOptions, mockRider } from '../../data/appPreview'
+import WaveCap from '../../components/WaveCap'
+import { vehicleOptions, mockRider, sendStatusSteps } from '../../data/appPreview'
 import { colors, fonts } from '../../theme'
 
 interface LiveTripScreenProps {
@@ -16,55 +17,93 @@ interface LiveTripScreenProps {
 }
 
 /** Ported from LiveTripScreen.tsx on the web app-preview — trip tracking as a ticket stub. */
-export default function LiveTripScreen({ vehicleId, onEnd }: LiveTripScreenProps) {
+export default function LiveTripScreen({ mode, vehicleId, onEnd }: LiveTripScreenProps) {
+  const stepIndex = 1 // "Picked up" — a representative mid-trip snapshot for the preview
   const vehicle = vehicleOptions.find((v) => v.id === vehicleId) ?? vehicleOptions[0]
 
   return (
     <View style={styles.screen}>
-      <MockMap showRoute />
-      <SafeAreaView edges={['top']} style={styles.topRow}>
-        <IconButton icon={X} onPress={onEnd} accessibilityLabel="Close" />
-        <View style={styles.etaPill}>
-          <Text style={styles.etaText}>Arriving in {vehicle.etaMins} min</Text>
+      <MockMap showRoute animateVehicle focus="route" />
+      <SafeAreaView edges={['top']}>
+        <View style={styles.topBar}>
+          <IconButton icon={X} onPress={onEnd} accessibilityLabel="Close" />
         </View>
-      </SafeAreaView>
 
-      <SafeAreaView edges={['bottom']} style={styles.sheet}>
-        <View style={styles.ticket}>
-          <View style={styles.ticketHeader}>
-            <View style={styles.riderRow}>
-              <View style={styles.avatar}>
-                <User size={24} color={colors.ink.light} />
-              </View>
-              <View>
-                <Text style={styles.riderName}>{mockRider.name}</Text>
-                <Text style={styles.riderMeta}>
-                  {mockRider.rating} · {vehicle.name} · {mockRider.plate}
-                </Text>
-              </View>
+        {mode === 'ride' ? (
+          <View style={styles.etaPill}>
+            <Text style={styles.etaText}>Arriving in {vehicle.etaMins} min</Text>
+          </View>
+        ) : (
+          <View style={styles.sendStatusCard}>
+            <View style={styles.sendStatusRow}>
+              <Text style={styles.sendStatusLabel}>{sendStatusSteps[stepIndex]}</Text>
+              <Text style={styles.sendStatusMeta}>
+                Step {stepIndex + 1} of {sendStatusSteps.length}
+              </Text>
             </View>
-            <StampMark label="On the way" style={{ width: 96 }} />
+            <View style={styles.progressTrack}>
+              <View style={[styles.progressFill, { width: `${(stepIndex / (sendStatusSteps.length - 1)) * 100}%` }]} />
+            </View>
+            <View style={styles.sendStepsRow}>
+              {sendStatusSteps.map((step, i) => (
+                <Text key={step} style={[styles.sendStepLabel, i <= stepIndex && styles.sendStepLabelActive]}>
+                  {step}
+                </Text>
+              ))}
+            </View>
           </View>
-
-          <TicketDivider holeColor="#00205C" style={{ marginVertical: 16 }} />
-
-          <View style={styles.actionsRow}>
-            <CouponButton icon={Phone} label="Call" />
-            <CouponButton icon={MessageCircle} label="Message" />
-            <CouponButton icon={ShieldAlert} label="Safety" tone="danger" />
-          </View>
-        </View>
+        )}
       </SafeAreaView>
+
+      <View style={styles.bottomWrap}>
+        <WaveCap fill="#00205C" />
+        <SafeAreaView edges={['bottom']} style={styles.sheet}>
+          <View style={styles.ticket}>
+            <View style={styles.ticketHeader}>
+              <View style={styles.riderRow}>
+                <View style={styles.avatar}>
+                  <User size={24} color={colors.ink.light} />
+                </View>
+                <View>
+                  <Text style={styles.riderName}>{mockRider.name}</Text>
+                  <Text style={styles.riderMeta}>
+                    {mockRider.rating} · {vehicle.name} · {mockRider.plate}
+                  </Text>
+                </View>
+              </View>
+              <StampMark label={mode === 'ride' ? 'On the way' : sendStatusSteps[stepIndex]} style={{ width: 104 }} />
+            </View>
+
+            <TicketDivider holeColor="#00205C" style={{ marginVertical: 16 }} />
+
+            <View style={styles.actionsRow}>
+              <CouponButton icon={Phone} label="Call" />
+              <CouponButton icon={MessageCircle} label="Message" />
+              <CouponButton icon={ShieldAlert} label="Safety" tone="danger" />
+            </View>
+          </View>
+        </SafeAreaView>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#E7EEFC' },
-  topRow: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
-  etaPill: { backgroundColor: '#fff', borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
+  topBar: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 4 },
+  etaPill: { position: 'absolute', top: 4, right: 20, backgroundColor: '#fff', borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   etaText: { fontFamily: fonts.sansSemibold, fontSize: 12, color: colors.ink.DEFAULT },
-  sheet: { position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: colors.primary[900], paddingHorizontal: 20, paddingTop: 20, borderTopLeftRadius: 24, borderTopRightRadius: 24 },
+  sendStatusCard: { marginHorizontal: 20, marginTop: 8, backgroundColor: '#fff', borderRadius: 16, paddingHorizontal: 16, paddingVertical: 12, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 8, shadowOffset: { width: 0, height: 4 }, elevation: 4 },
+  sendStatusRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  sendStatusLabel: { fontFamily: fonts.sansSemibold, fontSize: 12, color: colors.primary.DEFAULT },
+  sendStatusMeta: { fontSize: 11, color: colors.ink.light },
+  progressTrack: { marginTop: 8, height: 6, borderRadius: 3, backgroundColor: 'rgba(11,11,15,0.1)', overflow: 'hidden' },
+  progressFill: { height: '100%', borderRadius: 3, backgroundColor: colors.primary.DEFAULT },
+  sendStepsRow: { marginTop: 6, flexDirection: 'row', justifyContent: 'space-between' },
+  sendStepLabel: { fontSize: 9, fontFamily: fonts.sansMedium, color: colors.ink.light + '80' },
+  sendStepLabelActive: { color: colors.primary.DEFAULT },
+  bottomWrap: { position: 'absolute', bottom: 0, left: 0, right: 0 },
+  sheet: { marginTop: -1, backgroundColor: colors.primary[900], paddingHorizontal: 20, paddingTop: 20 },
   ticket: { backgroundColor: '#fff', borderRadius: 20, padding: 20 },
   ticketHeader: { flexDirection: 'row', justifyContent: 'space-between', gap: 12 },
   riderRow: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 },

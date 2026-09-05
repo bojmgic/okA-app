@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native'
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Bike, Tag, ShieldCheck, Sparkles, ArrowLeft } from 'lucide-react-native'
 import { notifications as mockNotifications } from '../../data/appPreview'
@@ -41,24 +42,31 @@ export default function NotificationsScreen({ onBack }: NotificationsScreenProps
         </View>
       ) : (
         <ScrollView contentContainerStyle={styles.list}>
-          {items.map((n) => {
+          <Animated.View entering={FadeIn.duration(300)}>
+          {items.map((n, i) => {
             const Icon = kindIcon[n.kind]
             return (
-              <Pressable key={n.id} onPress={() => markRead(n.id)} style={[styles.card, n.unread && styles.cardUnread]}>
-                <View style={styles.cardIcon}>
-                  <Icon size={16} color={colors.primary.DEFAULT} />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <View style={styles.cardTitleRow}>
-                    <Text style={styles.cardTitle}>{n.title}</Text>
-                    {n.unread && <View style={styles.dot} />}
+              <Animated.View key={n.id} entering={FadeInDown.delay(i * 40).duration(250)}>
+                <Pressable
+                  onPress={() => markRead(n.id)}
+                  style={({ pressed }) => [styles.card, n.unread && styles.cardUnread, pressed && styles.cardPressed]}
+                >
+                  <View style={styles.cardIcon}>
+                    <Icon size={16} color={colors.primary.DEFAULT} />
                   </View>
-                  <Text style={styles.cardBody}>{n.body}</Text>
-                  <Text style={styles.cardTime}>{n.time}</Text>
-                </View>
-              </Pressable>
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.cardTitleRow}>
+                      <Text style={styles.cardTitle}>{n.title}</Text>
+                      {n.unread && <View style={styles.dot} />}
+                    </View>
+                    <Text style={styles.cardBody}>{n.body}</Text>
+                    <Text style={styles.cardTime}>{n.time}</Text>
+                  </View>
+                </Pressable>
+              </Animated.View>
             )
           })}
+          </Animated.View>
         </ScrollView>
       )}
     </SafeAreaView>
@@ -78,6 +86,7 @@ const styles = StyleSheet.create({
   list: { paddingHorizontal: 20, paddingBottom: 24, gap: 8 },
   card: { flexDirection: 'row', gap: 12, borderRadius: 16, backgroundColor: colors.surface.tint, padding: 14 },
   cardUnread: { backgroundColor: colors.primary.DEFAULT + '0F' },
+  cardPressed: { transform: [{ scale: 0.97 }] },
   cardIcon: { height: 36, width: 36, borderRadius: 18, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
   cardTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   cardTitle: { fontFamily: fonts.sansSemibold, fontSize: 13, color: colors.ink.DEFAULT },

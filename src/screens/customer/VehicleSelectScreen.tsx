@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Zap, Wallet } from 'lucide-react-
 import MockMap from '../../components/MockMap'
 import IconButton from '../../components/IconButton'
 import PrimaryButton from '../../components/PrimaryButton'
+import WaveCap from '../../components/WaveCap'
 import { vehicleOptions } from '../../data/appPreview'
 import { colors, fonts } from '../../theme'
 
@@ -34,46 +35,52 @@ export default function VehicleSelectScreen({ mode, selected, onSelect, onBack, 
 
   return (
     <View style={styles.screen}>
-      <MockMap showRoute />
+      <MockMap showRoute focus="route" />
       <SafeAreaView edges={['top']}>
         <IconButton icon={ArrowLeft} onPress={onBack} accessibilityLabel="Back" style={styles.backBtn} />
       </SafeAreaView>
 
-      <SafeAreaView edges={['bottom']} style={styles.sheet}>
-        <View style={styles.card}>
-          <Pressable onPress={() => go(-1)} style={styles.arrow}>
-            <ChevronLeft size={18} color="#fff" />
-          </Pressable>
+      <View style={styles.bottomWrap}>
+        <WaveCap fill="#00205C" />
+        <SafeAreaView edges={['bottom']} style={styles.sheet}>
+          <Text style={styles.heading}>{mode === 'ride' ? 'Choose a ride' : 'Choose a courier'}</Text>
 
-          <View style={styles.deckCard}>
-            {tag && (
-              <View style={styles.tag}>
-                <tag.icon size={11} color={colors.primary.DEFAULT} />
-                <Text style={styles.tagText}>{tag.label}</Text>
+
+          <View style={styles.card}>
+            <Pressable onPress={() => go(-1)} style={({ pressed }) => [styles.arrow, pressed && styles.arrowPressed]}>
+              <ChevronLeft size={18} color="#fff" />
+            </Pressable>
+
+            <View style={styles.deckCard}>
+              {tag && (
+                <View style={styles.tag}>
+                  <tag.icon size={11} color={colors.primary.DEFAULT} />
+                  <Text style={styles.tagText}>{tag.label}</Text>
+                </View>
+              )}
+              <Image source={active.image} style={styles.vehicleImage} resizeMode="contain" />
+              <Text style={styles.vehicleName}>{active.name}</Text>
+              <Text style={styles.vehicleTagline}>{active.tagline}</Text>
+              <View style={styles.metaRow}>
+                <Text style={styles.metaText}>{active.etaMins} min away</Text>
+                <Text style={styles.price}>GHS {active.priceGHS}</Text>
               </View>
-            )}
-            <Image source={active.image} style={styles.vehicleImage} resizeMode="contain" />
-            <Text style={styles.vehicleName}>{active.name}</Text>
-            <Text style={styles.vehicleTagline}>{active.tagline}</Text>
-            <View style={styles.metaRow}>
-              <Text style={styles.metaText}>{active.etaMins} min away</Text>
-              <Text style={styles.price}>GHS {active.priceGHS}</Text>
             </View>
+
+            <Pressable onPress={() => go(1)} style={({ pressed }) => [styles.arrow, pressed && styles.arrowPressed]}>
+              <ChevronRight size={18} color="#fff" />
+            </Pressable>
           </View>
 
-          <Pressable onPress={() => go(1)} style={styles.arrow}>
-            <ChevronRight size={18} color="#fff" />
-          </Pressable>
-        </View>
+          <View style={styles.dots}>
+            {vehicleOptions.map((v, i) => (
+              <View key={v.id} style={[styles.dot, i === activeIndex && styles.dotActive]} />
+            ))}
+          </View>
 
-        <View style={styles.dots}>
-          {vehicleOptions.map((v, i) => (
-            <View key={v.id} style={[styles.dot, i === activeIndex && styles.dotActive]} />
-          ))}
-        </View>
-
-        <PrimaryButton label={`Confirm ${active.name}`} onPress={onConfirm} style={{ marginTop: 16, marginHorizontal: 20 }} />
-      </SafeAreaView>
+          <PrimaryButton label={`Confirm ${active.name}`} onPress={onConfirm} style={{ marginTop: 16, marginHorizontal: 20 }} />
+        </SafeAreaView>
+      </View>
     </View>
   )
 }
@@ -81,9 +88,12 @@ export default function VehicleSelectScreen({ mode, selected, onSelect, onBack, 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#E7EEFC' },
   backBtn: { marginLeft: 20, marginTop: 4 },
-  sheet: { position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: colors.primary[900], paddingTop: 20, borderTopLeftRadius: 24, borderTopRightRadius: 24 },
+  bottomWrap: { position: 'absolute', bottom: 0, left: 0, right: 0 },
+  sheet: { marginTop: -1, backgroundColor: colors.primary[900], paddingTop: 12 },
+  heading: { fontFamily: fonts.display, fontSize: 18, fontWeight: '600', color: '#fff', marginHorizontal: 20, marginBottom: 4 },
   card: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12 },
   arrow: { height: 36, width: 36, alignItems: 'center', justifyContent: 'center' },
+  arrowPressed: { transform: [{ scale: 0.88 }] },
   deckCard: { flex: 1, alignItems: 'center', backgroundColor: '#fff', borderRadius: 20, paddingVertical: 16 },
   tag: { position: 'absolute', top: 10, left: 10, flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: colors.primary.DEFAULT + '1A', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 4 },
   tagText: { fontSize: 10, fontFamily: fonts.sansBold, color: colors.primary.DEFAULT },

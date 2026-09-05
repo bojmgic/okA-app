@@ -1,6 +1,8 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native'
 import { Sparkles } from 'lucide-react-native'
 import { colors, fonts } from '../theme'
+
+type RedeemOptionType = { id: string; label: string; pointsCost: number }
 
 interface PointsCardProps {
   balance: number
@@ -8,11 +10,12 @@ interface PointsCardProps {
   nextTier: string
   pointsToNextTier: number
   tierProgress: number
-  redeemOptions: { id: string; label: string; pointsCost: number }[]
+  redeemOptions: RedeemOptionType[]
+  onRedeem?: (option: RedeemOptionType) => void
 }
 
 /** okA Points card — ported from PointsCard.tsx on the web app-preview. */
-export default function PointsCard({ balance, tier, nextTier, pointsToNextTier, tierProgress, redeemOptions }: PointsCardProps) {
+export default function PointsCard({ balance, tier, nextTier, pointsToNextTier, tierProgress, redeemOptions, onRedeem }: PointsCardProps) {
   return (
     <View style={styles.card}>
       <View style={styles.headerRow}>
@@ -35,11 +38,11 @@ export default function PointsCard({ balance, tier, nextTier, pointsToNextTier, 
       </Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.redeemRow} contentContainerStyle={{ gap: 8 }}>
         {redeemOptions.map((r) => (
-          <View key={r.id} style={styles.chip}>
+          <Pressable key={r.id} onPress={() => onRedeem?.(r)} style={({ pressed }) => [styles.chip, pressed && { opacity: 0.7 }]}>
             <Text style={styles.chipText}>
               {r.label} · {r.pointsCost} pts
             </Text>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </View>

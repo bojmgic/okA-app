@@ -6,9 +6,15 @@
  * the web app-preview describe the same product.
  */
 
-const okaMotorbikeTransparent: number | undefined = undefined
-const okaTricycleTransparent: number | undefined = undefined
-const okaAboboyaaCargoTransparent: number | undefined = undefined
+// Motorbike: brand4 = user-supplied manual cutout (replaces the brand2/
+// brand3 automated ones, which kept leaving edge-halo/enclosed-background
+// artifacts no matter how the removal script was tuned).
+// Tricycle: brand3 = background-hole-fixed so enclosed background (cabin
+// window glass, ground shadow) reads as transparent instead of opaque
+// white/grey against this app's dark screen backgrounds.
+const okaMotorbikeTransparent = require('../assets/vehicles/oka-motorbike-transparent-brand4.webp')
+const okaTricycleTransparent = require('../assets/vehicles/oka-tricycle-transparent-brand3.webp')
+const okaAboboyaaCargoTransparent = require('../assets/vehicles/oka-aboboyaa-cargo.webp')
 
 export interface VehicleOption {
   id: string
@@ -34,7 +40,7 @@ export const vehicleOptions: VehicleOption[] = [
   },
   {
     id: 'tricycle',
-    name: 'okA Tricycle (K3K3)',
+    name: 'okA k3k3(Tricycle)',
     tagline: 'Room to move, room to carry.',
     description: 'Passenger and medium cargo transportation across the city, comfortable and dependable.',
     capacity: 'Passengers + medium cargo',

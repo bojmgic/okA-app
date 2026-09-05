@@ -29,7 +29,11 @@ export default function TabBar({ items, active }: TabBarProps) {
       {items.map((item) => {
         const isActive = item.key === active
         return (
-          <Pressable key={item.key} onPress={item.onPress} style={styles.tab}>
+          <Pressable
+            key={item.key}
+            onPress={item.onPress}
+            style={({ pressed }) => [styles.tab, pressed && styles.tabPressed]}
+          >
             {isActive ? (
               <LinearGradient colors={primaryButtonGradient.colors} locations={primaryButtonGradient.locations} style={styles.pill}>
                 <item.icon size={17} color="#fff" />
@@ -58,6 +62,7 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   tab: {},
+  tabPressed: { transform: [{ scale: 0.92 }] },
   pill: {
     flexDirection: 'row',
     alignItems: 'center',

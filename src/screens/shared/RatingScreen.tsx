@@ -6,8 +6,6 @@ import { VehicleGhost } from '../../components/GhostSilhouette'
 import PrimaryButton from '../../components/PrimaryButton'
 import { colors, fonts } from '../../theme'
 
-const okaLogo = undefined
-
 interface RatingScreenProps {
   subjectName: string
   subjectDetail: string
@@ -27,7 +25,7 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
 
   return (
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
-      <VehicleGhost src={okaLogo} top={40} left={70} width={200} rotate={-5} opacity={0.1} />
+      <VehicleGhost top={40} left={70} width={200} rotate={-5} opacity={0.1} />
 
       <View style={styles.summary}>
         <View style={styles.checkBadge}>
@@ -46,7 +44,7 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
 
         <View style={styles.starsRow}>
           {[1, 2, 3, 4, 5].map((n) => (
-            <Pressable key={n} onPress={() => setRating(n)} hitSlop={6}>
+            <Pressable key={n} onPress={() => setRating(n)} hitSlop={6} style={({ pressed }) => [pressed && styles.starPressed]}>
               <Star size={30} color={colors.primary.DEFAULT} fill={rating >= n ? colors.primary.DEFAULT : colors.surface.tint} />
             </Pressable>
           ))}
@@ -57,7 +55,11 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
             {tags.map((tag) => {
               const active = selectedTags.includes(tag)
               return (
-                <Pressable key={tag} onPress={() => toggleTag(tag)} style={[styles.tag, active && styles.tagActive]}>
+                <Pressable
+                  key={tag}
+                  onPress={() => toggleTag(tag)}
+                  style={({ pressed }) => [styles.tag, active && styles.tagActive, pressed && styles.tagPressed]}
+                >
                   <Text style={[styles.tagText, active && styles.tagTextActive]}>{tag}</Text>
                 </Pressable>
               )
@@ -66,7 +68,7 @@ export default function RatingScreen({ subjectName, subjectDetail, fareGHS, trip
         )}
 
         <PrimaryButton label="Submit rating" disabled={rating === 0} onPress={onDone} style={{ marginTop: 20 }} />
-        <Pressable onPress={onDone}>
+        <Pressable onPress={onDone} style={({ pressed }) => [pressed && styles.skipPressed]}>
           <Text style={styles.skip}>Skip</Text>
         </Pressable>
       </View>
@@ -86,10 +88,13 @@ const styles = StyleSheet.create({
   rateLabel: { marginTop: 10, fontFamily: fonts.sansSemibold, fontSize: 14, color: colors.ink.DEFAULT },
   subjectDetail: { fontSize: 12, color: colors.ink.light },
   starsRow: { flexDirection: 'row', gap: 6, marginTop: 16 },
+  starPressed: { transform: [{ scale: 0.88 }] },
   tagRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6, marginTop: 16 },
   tag: { borderRadius: 999, borderWidth: 1, borderColor: 'rgba(11,11,15,0.15)', paddingHorizontal: 12, paddingVertical: 6 },
   tagActive: { borderColor: colors.primary.DEFAULT, backgroundColor: colors.primary.DEFAULT + '1A' },
+  tagPressed: { transform: [{ scale: 0.96 }] },
   tagText: { fontSize: 11, fontFamily: fonts.sansMedium, color: colors.ink.light },
   tagTextActive: { color: colors.primary.DEFAULT },
   skip: { marginTop: 12, textAlign: 'center', fontSize: 12, fontFamily: fonts.sansMedium, color: colors.ink.light },
+  skipPressed: { opacity: 0.6 },
 })

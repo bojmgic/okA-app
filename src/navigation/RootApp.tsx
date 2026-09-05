@@ -8,6 +8,8 @@ import { colors, fonts } from '../theme'
 import AuthScreen from '../screens/shared/AuthScreen'
 import RatingScreen from '../screens/shared/RatingScreen'
 import NotificationsScreen from '../screens/shared/NotificationsScreen'
+import SettingsScreen from '../screens/shared/SettingsScreen'
+import HelpSupportScreen from '../screens/shared/HelpSupportScreen'
 
 import HomeScreen from '../screens/customer/HomeScreen'
 import VehicleSelectScreen from '../screens/customer/VehicleSelectScreen'
@@ -15,6 +17,7 @@ import LiveTripScreen from '../screens/customer/LiveTripScreen'
 import WalletScreen from '../screens/customer/WalletScreen'
 import ProfileScreen from '../screens/customer/ProfileScreen'
 import ActivityScreen from '../screens/customer/ActivityScreen'
+import SavedPlacesScreen from '../screens/customer/SavedPlacesScreen'
 
 import DriverHomeScreen from '../screens/driver/DriverHomeScreen'
 import RequestScreen from '../screens/driver/RequestScreen'
@@ -22,11 +25,39 @@ import DriverTripScreen from '../screens/driver/DriverTripScreen'
 import EarningsScreen from '../screens/driver/EarningsScreen'
 import DriverProfileScreen from '../screens/driver/DriverProfileScreen'
 import DriverOnboardingScreen from '../screens/driver/DriverOnboardingScreen'
+import DriverVehicleDocsScreen from '../screens/driver/DriverVehicleDocsScreen'
+import DriverPayoutScreen from '../screens/driver/DriverPayoutScreen'
+import DriverRideHistoryScreen from '../screens/driver/DriverRideHistoryScreen'
 
 import { mockRider, mockCustomer, incomingRequest } from '../data/appPreview'
 
-type CustomerScreen = 'auth' | 'home' | 'select' | 'trip' | 'rating' | 'wallet' | 'profile' | 'activity' | 'notifications'
-type DriverScreen = 'auth' | 'onboarding' | 'home' | 'request' | 'trip' | 'rating' | 'earnings' | 'profile'
+type CustomerScreen =
+  | 'auth'
+  | 'home'
+  | 'select'
+  | 'trip'
+  | 'rating'
+  | 'wallet'
+  | 'profile'
+  | 'activity'
+  | 'notifications'
+  | 'settings'
+  | 'savedPlaces'
+  | 'help'
+type DriverScreen =
+  | 'auth'
+  | 'onboarding'
+  | 'home'
+  | 'request'
+  | 'trip'
+  | 'rating'
+  | 'earnings'
+  | 'profile'
+  | 'settings'
+  | 'help'
+  | 'vehicleDocs'
+  | 'payout'
+  | 'rideHistory'
 
 /**
  * Root screen switcher — mirrors the state-machine shape of AppPreview.tsx
@@ -97,11 +128,28 @@ export default function RootApp() {
       case 'wallet':
         return <WalletScreen onBack={() => setCustomerScreen('home')} onOpenProfile={() => setCustomerScreen('profile')} />
       case 'profile':
-        return <ProfileScreen onBack={() => setCustomerScreen('home')} onOpenWallet={() => setCustomerScreen('wallet')} />
+        return (
+          <ProfileScreen
+            onBack={() => setCustomerScreen('home')}
+            onOpenWallet={() => setCustomerScreen('wallet')}
+            onOpenSettings={() => setCustomerScreen('settings')}
+            onOpenSavedPlaces={() => setCustomerScreen('savedPlaces')}
+            onOpenHelp={() => setCustomerScreen('help')}
+            onOpenNotifications={() => setCustomerScreen('notifications')}
+            onOpenActivity={() => setCustomerScreen('activity')}
+            onLogout={() => setCustomerScreen('auth')}
+          />
+        )
       case 'activity':
         return <ActivityScreen onBack={() => setCustomerScreen('home')} />
       case 'notifications':
         return <NotificationsScreen onBack={() => setCustomerScreen('home')} />
+      case 'settings':
+        return <SettingsScreen onBack={() => setCustomerScreen('profile')} />
+      case 'savedPlaces':
+        return <SavedPlacesScreen onBack={() => setCustomerScreen('profile')} />
+      case 'help':
+        return <HelpSupportScreen onBack={() => setCustomerScreen('profile')} />
     }
   }
 
@@ -143,7 +191,27 @@ export default function RootApp() {
     case 'earnings':
       return <EarningsScreen onBack={() => setDriverScreen('home')} />
     case 'profile':
-      return <DriverProfileScreen onBack={() => setDriverScreen('home')} />
+      return (
+        <DriverProfileScreen
+          onBack={() => setDriverScreen('home')}
+          onOpenSettings={() => setDriverScreen('settings')}
+          onOpenHelp={() => setDriverScreen('help')}
+          onOpenVehicleDocs={() => setDriverScreen('vehicleDocs')}
+          onOpenPayout={() => setDriverScreen('payout')}
+          onOpenRideHistory={() => setDriverScreen('rideHistory')}
+          onLogout={() => setDriverScreen('auth')}
+        />
+      )
+    case 'settings':
+      return <SettingsScreen onBack={() => setDriverScreen('profile')} />
+    case 'help':
+      return <HelpSupportScreen onBack={() => setDriverScreen('profile')} />
+    case 'vehicleDocs':
+      return <DriverVehicleDocsScreen onBack={() => setDriverScreen('profile')} />
+    case 'payout':
+      return <DriverPayoutScreen onBack={() => setDriverScreen('profile')} />
+    case 'rideHistory':
+      return <DriverRideHistoryScreen onBack={() => setDriverScreen('profile')} />
   }
 
   return <View style={styles.fallback} />
